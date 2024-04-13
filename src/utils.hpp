@@ -38,7 +38,6 @@
 #endif
 
 #include <range/v3/algorithm/for_each.hpp>
-#include <range/v3/algorithm/reverse.hpp>
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/view/filter.hpp>
 #include <range/v3/view/join.hpp>
@@ -101,36 +100,26 @@ inline constexpr std::size_t remove_all(std::string& inout, std::string_view wha
     return replace_all(inout, what, "");
 }
 
+/// @brief Split a string into multiple lines based on a delimiter.
+/// @param str The string to split.
+/// @param delim The delimiter to split the string.
+/// @return A vector of strings representing the split lines.
 [[nodiscard]] inline constexpr auto make_multiline(std::string_view str, char delim = '\n') noexcept -> std::vector<std::string> {
     return [&]() constexpr {
-        constexpr auto functor = [](auto&& rng) {
-            return std::string_view(&*rng.begin(), static_cast<size_t>(ranges::distance(rng)));
-        };
-        constexpr auto second = [](auto&& rng) { return rng != ""; };
-
-        auto&& view_res = str
-            | ranges::views::split(delim)
-            | ranges::views::transform(functor);
-
         std::vector<std::string> lines{};
-        ranges::for_each(view_res | ranges::views::filter(second), [&](auto&& rng) { lines.emplace_back(rng); });
+        ranges::for_each(utils::make_split_view(str, delim), [&](auto&& rng) { lines.emplace_back(rng); });
         return lines;
     }();
 }
 
+/// @brief Split a string into views of multiple lines based on a delimiter.
+/// @param str The string to split.
+/// @param delim The delimiter to split the string.
+/// @return A vector of string views representing the split lines.
 [[nodiscard]] inline constexpr auto make_multiline_view(std::string_view str, char delim) noexcept -> std::vector<std::string_view> {
     return [&]() constexpr {
-        constexpr auto functor = [](auto&& rng) {
-            return std::string_view(&*rng.begin(), static_cast<size_t>(ranges::distance(rng)));
-        };
-        constexpr auto second = [](auto&& rng) { return rng != ""; };
-
-        auto&& view_res = str
-            | ranges::views::split(delim)
-            | ranges::views::transform(functor);
-
         std::vector<std::string_view> lines{};
-        ranges::for_each(view_res | ranges::views::filter(second), [&](auto&& rng) { lines.emplace_back(rng); });
+        ranges::for_each(utils::make_split_view(str, delim), [&](auto&& rng) { lines.emplace_back(rng); });
         return lines;
     }();
 }
