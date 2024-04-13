@@ -62,6 +62,22 @@ bool write_to_file(const std::string_view& filepath, const std::string_view& dat
 std::string exec(const std::string_view& command) noexcept;
 [[nodiscard]] std::string fix_path(std::string&& path) noexcept;
 
+/// @brief Make a split view from a string into multiple lines based on a delimiter.
+/// @param str The string to split.
+/// @param delim The delimiter to split the string.
+/// @return A range view representing the split lines.
+constexpr auto make_split_view(std::string_view str, char delim) noexcept {
+    constexpr auto functor = [](auto&& rng) {
+        return std::string_view(&*rng.begin(), static_cast<size_t>(ranges::distance(rng)));
+    };
+    constexpr auto second = [](auto&& rng) { return rng != ""; };
+
+    return str
+        | ranges::views::split(delim)
+        | ranges::views::transform(functor)
+        | ranges::views::filter(second);
+}
+
 alpm_handle_t* parse_alpm(std::string_view root, std::string_view dbpath, alpm_errno_t* err) noexcept;
 std::int32_t release_alpm(alpm_handle_t* handle, alpm_errno_t* err) noexcept;
 
