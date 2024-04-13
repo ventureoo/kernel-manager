@@ -227,14 +227,14 @@
         <source>&lt;html&gt;
 &lt;body&gt;
 &lt;p&gt;Here you&apos;ll see information about currently installed and available Linux kernels.&lt;/p&gt;
-&lt;p&gt;You can install and/or uninstall kernel packages using the checkboxes on the leftmost column.&lt;/p&gt;
-&lt;p&gt;This app won&apos;t work, if you are already running a pacman instance.&lt;/p&gt;
+&lt;p&gt;You can install/uninstall kernel packages using the checkboxes on the leftmost column.&lt;/p&gt;
+&lt;p&gt;This app won&apos;t work if you are already running a pacman instance.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</source>
         <translation>&lt;html&gt;
 &lt;body&gt;
 &lt;p&gt;Здесь вы увидите информацию о текущих установленных и доступных ядрах Linux.&lt;/p&gt;
-&lt;p&gt;Вы можете установить и/или удалить пакеты ядра, используя флажки в левой колонке.&lt;/p&gt;
+&lt;p&gt;Вы можете установить/удалить пакеты ядра, используя флажки в левой колонке.&lt;/p&gt;
 &lt;p&gt;Это приложение не будет работать, если у вас уже где-либо запущен pacman.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</translation>

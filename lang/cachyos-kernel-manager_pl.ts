@@ -188,7 +188,7 @@
 &lt;p&gt;This app won&apos;t work, if you are already running a pacman instance.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</source>
-        <translation>&lt;html&gt;
+        <translation type="vanished">&lt;html&gt;
 &lt;body&gt;
 &lt;p&gt;Tutaj znajdziesz informację na temat aktualnie zainstalowanego kernela jak również kerneli dostępnych do zainstalowania.&lt;/p&gt;
 &lt;p&gt;Możesz zainstalować i/lub odinstalować pakiety kernela za pomocą pól wyboru w kolumnie po lewej stronie.&lt;/p&gt;
@@ -254,6 +254,16 @@ cloning PKGBUILDs..</source>
     <message>
         <source>Please wait...
 Initializing kernels..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;
+&lt;body&gt;
+&lt;p&gt;Here you&apos;ll see information about currently installed and available Linux kernels.&lt;/p&gt;
+&lt;p&gt;You can install/uninstall kernel packages using the checkboxes on the leftmost column.&lt;/p&gt;
+&lt;p&gt;This app won&apos;t work if you are already running a pacman instance.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

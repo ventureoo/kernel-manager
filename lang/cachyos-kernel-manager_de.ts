@@ -184,14 +184,14 @@
         <source>&lt;html&gt;
 &lt;body&gt;
 &lt;p&gt;Here you&apos;ll see information about currently installed and available Linux kernels.&lt;/p&gt;
-&lt;p&gt;You can install and/or uninstall kernel packages using the checkboxes on the leftmost column.&lt;/p&gt;
-&lt;p&gt;This app won&apos;t work, if you are already running a pacman instance.&lt;/p&gt;
+&lt;p&gt;You can install/uninstall kernel packages using the checkboxes on the leftmost column.&lt;/p&gt;
+&lt;p&gt;This app won&apos;t work if you are already running a pacman instance.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</source>
         <translation>&lt;html&gt;
 &lt;body&gt;
 &lt;p&gt;Hier finden Sie Informationen über die derzeit installierten und verfügbaren Linux-Kernel.&lt;/p&gt;
-&lt;p&gt;Sie können Kernel-Pakete installieren und/oder deinstallieren, indem Sie die Kontrollkästchen in der Spalte ganz links aktivieren.&lt;/p&gt;
+&lt;p&gt;Sie können Kernel-Pakete installieren/deinstallieren, indem Sie die Kontrollkästchen in der Spalte ganz links aktivieren.&lt;/p&gt;
 &lt;p&gt;Diese Anwendung wird nicht funktionieren, wenn Sie bereits eine pacman-Instanz verwenden.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</translation>

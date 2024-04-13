@@ -188,7 +188,7 @@
 &lt;p&gt;This app won&apos;t work, if you are already running a pacman instance.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</source>
-        <translation>&lt;html&gt;
+        <translation type="vanished">&lt;html&gt;
 &lt;body&gt;
 &lt;p&gt;Burada mevcut kurulu ve kurulmaya müsait tüm Linux çekirdekleri hakkında bilgiler bulabilirsiniz.&lt;/p&gt;
 &lt;p&gt;Sol sütundaki kutucuklara tıklayarak çekirdek paketlerini kurabilir ve/ya kaldırabilirsiniz.&lt;/p&gt;
@@ -259,6 +259,16 @@ PKGBUILD&apos;ler klonlanıyor…</translation>
 Initializing kernels..</source>
         <translation>Lütfen bekleyin…
 Çekirdekler ilk kullanıma hazırlandırılıyor…</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;
+&lt;body&gt;
+&lt;p&gt;Here you&apos;ll see information about currently installed and available Linux kernels.&lt;/p&gt;
+&lt;p&gt;You can install/uninstall kernel packages using the checkboxes on the leftmost column.&lt;/p&gt;
+&lt;p&gt;This app won&apos;t work if you are already running a pacman instance.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
