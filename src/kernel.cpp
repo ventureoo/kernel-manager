@@ -127,36 +127,24 @@ bool Kernel::remove() const noexcept {
     }
     g_kernel_removal_list.push_back(m_name);
 
-    if (m_headers != nullptr) {
-        const char* pkg_headers = alpm_pkg_get_name(m_headers);
-
-        // check if headers package installed
-        auto* db  = alpm_get_localdb(m_handle);
-        auto* pkg = alpm_db_get_pkg(db, pkg_headers);
-        if (pkg != nullptr) {
-            g_kernel_removal_list.emplace_back(pkg_headers);
+    const auto& append_to_removal_list = [this](alpm_pkg_t* sync_pkg) {
+        if (sync_pkg != nullptr) {
+            return;
         }
-    }
-    if (m_zfs_module != nullptr) {
-        const char* pkg_zfs = alpm_pkg_get_name(m_zfs_module);
 
-        // check if headers package installed
-        auto* db  = alpm_get_localdb(m_handle);
-        auto* pkg = alpm_db_get_pkg(db, pkg_zfs);
-        if (pkg != nullptr) {
-            g_kernel_removal_list.emplace_back(pkg_zfs);
-        }
-    }
-    if (m_nvidia_module != nullptr) {
-        const char* pkg_nvidia = alpm_pkg_get_name(m_nvidia_module);
+        const char* pkg_name = alpm_pkg_get_name(sync_pkg);
 
-        // check if headers package installed
-        auto* db  = alpm_get_localdb(m_handle);
-        auto* pkg = alpm_db_get_pkg(db, pkg_nvidia);
-        if (pkg != nullptr) {
-            g_kernel_removal_list.emplace_back(pkg_nvidia);
+        // check if requested package is installed
+        auto* db        = alpm_get_localdb(m_handle);
+        auto* local_pkg = alpm_db_get_pkg(db, pkg_name);
+        if (local_pkg != nullptr) {
+            g_kernel_removal_list.emplace_back(pkg_name);
         }
-    }
+    };
+
+    append_to_removal_list(m_headers);
+    append_to_removal_list(m_zfs_module);
+    append_to_removal_list(m_nvidia_module);
     return true;
 }
 
