@@ -41,6 +41,7 @@
 #include <ui_km-window.h>
 
 #include "conf-window.hpp"
+#include "schedext-window.hpp"
 #include "kernel.hpp"
 #include "utils.hpp"
 
@@ -104,6 +105,7 @@ class MainWindow final : public QMainWindow {
  private:
     void on_cancel() noexcept;
     void on_execute() noexcept;
+    void on_schedext_config() noexcept;
     void on_configure() noexcept;
 
     void check_uncheck_item() noexcept;
@@ -127,10 +129,11 @@ class MainWindow final : public QMainWindow {
     Work* m_worker{nullptr};
 
     alpm_errno_t m_err{};
-    alpm_handle_t* m_handle                   = utils::parse_alpm("/", "/var/lib/pacman/", &m_err);
-    std::vector<Kernel> m_kernels             = Kernel::get_kernels(m_handle);
-    std::unique_ptr<Ui::MainWindow> m_ui      = std::make_unique<Ui::MainWindow>();
-    std::unique_ptr<ConfWindow> m_conf_window = std::make_unique<ConfWindow>();
+    alpm_handle_t* m_handle                        = utils::parse_alpm("/", "/var/lib/pacman/", &m_err);
+    std::vector<Kernel> m_kernels                  = Kernel::get_kernels(m_handle);
+    std::unique_ptr<Ui::MainWindow> m_ui           = std::make_unique<Ui::MainWindow>();
+    std::unique_ptr<ConfWindow> m_conf_window      = std::make_unique<ConfWindow>();
+    std::unique_ptr<SchedExtWindow> m_sched_window = std::make_unique<SchedExtWindow>();
 
     void build_change_list(QTreeWidgetItem* item) noexcept;
     void set_progress_dialog() noexcept;

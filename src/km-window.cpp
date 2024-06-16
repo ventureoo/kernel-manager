@@ -224,6 +224,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(m_ui->cancel, &QPushButton::clicked, this, &MainWindow::on_cancel);
     connect(m_ui->ok, &QPushButton::clicked, this, &MainWindow::on_execute);
     connect(m_ui->configure, &QPushButton::clicked, this, &MainWindow::on_configure);
+    connect(m_ui->schedext, &QPushButton::clicked, this, &MainWindow::on_schedext_config);
 
     // Connect worker thread signals
     connect(m_worker_th, &QThread::finished, m_worker, &QObject::deleteLater);
@@ -370,6 +371,10 @@ void MainWindow::on_execute() noexcept {
     m_thread_running.store(true, std::memory_order_relaxed);
     m_cv.notify_all();
     m_worker_th->start();
+}
+
+void MainWindow::on_schedext_config() noexcept {
+    m_sched_window->show();
 }
 
 // NOLINTEND(bugprone-unhandled-exception-at-new)

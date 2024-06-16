@@ -111,6 +111,13 @@
         </spacer>
        </item>
        <item>
+        <widget class="QPushButton" name="schedext">
+         <property name="text">
+          <string>sched-ext scheduler config</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="configure">
          <property name="text">
           <string>Configure</string>
