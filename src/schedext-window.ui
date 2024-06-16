@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>CachyOS SchedExt Configure</string>
+   <string>CachyOS Configure sched-ext</string>
   </property>
   <property name="windowIcon">
    <iconset theme="cachyos-kernel-manager"/>

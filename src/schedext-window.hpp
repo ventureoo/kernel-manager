@@ -69,7 +69,7 @@ class SchedExtWindow final : public QMainWindow {
 
     std::vector<std::string> m_previously_set_options{};
     std::unique_ptr<Ui::SchedExtWindow> m_ui = std::make_unique<Ui::SchedExtWindow>();
-    QTimer *m_sched_timer = nullptr;
+    QTimer* m_sched_timer                    = nullptr;
 
     void update_current_sched() noexcept;
 };

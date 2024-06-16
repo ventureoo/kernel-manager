@@ -41,8 +41,8 @@
 #include <ui_km-window.h>
 
 #include "conf-window.hpp"
-#include "schedext-window.hpp"
 #include "kernel.hpp"
+#include "schedext-window.hpp"
 #include "utils.hpp"
 
 #include <array>
