@@ -104,7 +104,6 @@ GENERATE_CONST_LOOKUP_OPTION_VALUES(kernel_name, "cachyos", "bore", "rc", "rt", 
 GENERATE_CONST_OPTION_VALUES(hz_tick, "1000", "750", "600", "500", "300", "250", "100")
 GENERATE_CONST_OPTION_VALUES(tickless_mode, "full", "idle", "perodic")
 GENERATE_CONST_OPTION_VALUES(preempt_mode, "full", "voluntary", "server")
-GENERATE_CONST_OPTION_VALUES(lru_config_mode, "standard", "stats", "none")
 GENERATE_CONST_OPTION_VALUES(lto_mode, "none", "full", "thin")
 GENERATE_CONST_OPTION_VALUES(hugepage_mode, "always", "madvise")
 GENERATE_CONST_OPTION_VALUES(cpu_opt_mode, "manual", "generic", "native_amd", "native_intel", "zen", "zen2", "zen3", "sandybridge", "ivybridge", "haswell", "icelake", "tigerlake", "alderlake")
@@ -324,8 +323,6 @@ std::string ConfWindow::get_all_set_values() const noexcept {
     result += convert_to_var_assign("HZ_ticks", get_hz_tick(static_cast<size_t>(options_page_ui_obj->hzticks_combo_box->currentIndex())));
     result += convert_to_var_assign("tickrate", get_tickless_mode(static_cast<size_t>(options_page_ui_obj->tickless_combo_box->currentIndex())));
     result += convert_to_var_assign("preempt", get_preempt_mode(static_cast<size_t>(options_page_ui_obj->preempt_combo_box->currentIndex())));
-    result += convert_to_var_assign("lru_config", get_lru_config_mode(static_cast<size_t>(options_page_ui_obj->lru_config_combo_box->currentIndex())));
-    result += convert_to_var_assign("vma_config", get_lru_config_mode(static_cast<size_t>(options_page_ui_obj->vma_config_combo_box->currentIndex())));
     result += convert_to_var_assign("hugepage", get_hugepage_mode(static_cast<size_t>(options_page_ui_obj->hugepage_combo_box->currentIndex())));
     result += convert_to_var_assign("lto", get_lto_mode(static_cast<size_t>(options_page_ui_obj->lto_combo_box->currentIndex())));
 
@@ -412,18 +409,6 @@ ConfWindow::ConfWindow(QWidget* parent)
                   << "Server";
     options_page_ui_obj->preempt_combo_box->addItems(preempt_modes);
 
-    QStringList lru_config_modes;
-    lru_config_modes << "Standard"
-                     << "Stats"
-                     << "None";
-    options_page_ui_obj->lru_config_combo_box->addItems(lru_config_modes);
-
-    QStringList vma_config_modes;
-    vma_config_modes << "Standard"
-                     << "Stats"
-                     << "None";
-    options_page_ui_obj->vma_config_combo_box->addItems(vma_config_modes);
-
     /* clang-format off */
     QStringList cpu_optims;
     cpu_optims << "Disabled"
@@ -462,10 +447,6 @@ ConfWindow::ConfWindow(QWidget* parent)
     // prepare_build_environment();
     // reset_patches_data_tab();
     connect_all_checkboxes();
-
-    connect(options_page_ui_obj->vma_config_combo_box, &QComboBox::currentIndexChanged, this, [this](std::int32_t) {
-        reset_patches_data_tab();
-    });
 
     // local patches
     connect(patches_page_ui_obj->local_patch_button, &QPushButton::clicked, this, [this, patches_page_ui_obj] {
