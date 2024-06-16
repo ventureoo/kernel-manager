@@ -137,6 +137,26 @@ bool Kernel::remove() const noexcept {
             g_kernel_removal_list.emplace_back(pkg_headers);
         }
     }
+    if (m_zfs_module != nullptr) {
+        const char* pkg_zfs = alpm_pkg_get_name(m_zfs_module);
+
+        // check if headers package installed
+        auto* db  = alpm_get_localdb(m_handle);
+        auto* pkg = alpm_db_get_pkg(db, pkg_zfs);
+        if (pkg != nullptr) {
+            g_kernel_removal_list.emplace_back(pkg_zfs);
+        }
+    }
+    if (m_nvidia_module != nullptr) {
+        const char* pkg_nvidia = alpm_pkg_get_name(m_nvidia_module);
+
+        // check if headers package installed
+        auto* db  = alpm_get_localdb(m_handle);
+        auto* pkg = alpm_db_get_pkg(db, pkg_nvidia);
+        if (pkg != nullptr) {
+            g_kernel_removal_list.emplace_back(pkg_nvidia);
+        }
+    }
     return true;
 }
 
