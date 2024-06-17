@@ -72,11 +72,11 @@ auto get_current_scheduler() noexcept -> std::string {
 
     // NOTE: we assume that window won't be launched on kernel without sched_ext
     // e.g we won't show window at all in that case.
-    const auto& current_state = read_kernel_file("/sys/kernel/sched_ext/state");
+    const auto& current_state = read_kernel_file("/sys/kernel/sched_ext/state"sv);
     if (current_state != "enabled"sv) {
         return current_state;
     }
-    const auto& current_sched = read_kernel_file("/sys/kernel/sched_ext/root/ops");
+    const auto& current_sched = read_kernel_file("/sys/kernel/sched_ext/root/ops"sv);
     if (current_sched.empty()) {
         return std::string{"unknown"sv};
     }
@@ -85,12 +85,12 @@ auto get_current_scheduler() noexcept -> std::string {
 
 auto is_scx_service_enabled() noexcept -> bool {
     using namespace std::string_view_literals;
-    return utils::exec("systemctl is-enabled scx") == "enabled"sv;
+    return utils::exec("systemctl is-enabled scx"sv) == "enabled"sv;
 }
 
 auto is_scx_service_active() noexcept -> bool {
     using namespace std::string_view_literals;
-    return utils::exec("systemctl is-active scx") == "active"sv;
+    return utils::exec("systemctl is-active scx"sv) == "active"sv;
 }
 }  // namespace
 

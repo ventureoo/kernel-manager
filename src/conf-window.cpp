@@ -100,6 +100,8 @@ namespace fs = std::filesystem;
     GENERATE_CONST_OPTION_VALUES(name, __VA_ARGS__)    \
     GENERATE_CONST_LOOKUP_VALUES(name, __VA_ARGS__)
 
+namespace {
+
 GENERATE_CONST_LOOKUP_OPTION_VALUES(kernel_name, "cachyos", "bore", "rc", "rt", "rt-bore", "sched-ext")
 GENERATE_CONST_OPTION_VALUES(hz_tick, "1000", "750", "600", "500", "300", "250", "100")
 GENERATE_CONST_OPTION_VALUES(tickless_mode, "full", "idle", "perodic")
@@ -147,11 +149,6 @@ constexpr auto get_kernel_name_path(std::string_view kernel_name) noexcept {
 
 inline bool checkstate_checked(QCheckBox* checkbox) noexcept {
     return (checkbox->checkState() == Qt::Checked);
-}
-
-inline auto convert_checkstate(QCheckBox* checkbox) noexcept {
-    using namespace std::string_view_literals;
-    return checkstate_checked(checkbox) ? "y"sv : "n"sv;
 }
 
 constexpr auto convert_to_varname(std::string_view option) noexcept {
@@ -281,6 +278,8 @@ inline void list_widget_apply_edit_flag(QListWidget* list_widget) noexcept {
         item->setFlags(item->flags() | Qt::ItemIsEditable);
     }
 }
+
+}  // namespace
 
 void ConfWindow::connect_all_checkboxes() noexcept {
     auto* options_page_ui_obj = m_ui->conf_options_page_widget->get_ui_obj();

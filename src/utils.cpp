@@ -55,7 +55,7 @@ namespace fs = std::filesystem;
 
 namespace utils {
 
-auto read_whole_file(const std::string_view& filepath) noexcept -> std::string {
+auto read_whole_file(std::string_view filepath) noexcept -> std::string {
     // Use std::fopen because it's faster than std::ifstream
     auto* file = std::fopen(filepath.data(), "rb");
     if (file == nullptr) {
@@ -80,7 +80,7 @@ auto read_whole_file(const std::string_view& filepath) noexcept -> std::string {
     return buf;
 }
 
-bool write_to_file(const std::string_view& filepath, const std::string_view& data) noexcept {
+bool write_to_file(std::string_view filepath, std::string_view data) noexcept {
     std::ofstream file{filepath.data()};
     if (!file.is_open()) {
         fmt::print(stderr, "[WRITE_TO_FILE] '{}' open failed: {}\n", filepath, std::strerror(errno));
@@ -95,7 +95,7 @@ bool write_to_file(const std::string_view& filepath, const std::string_view& dat
 // https://github.com/arun11299/cpp-subprocess/blob/master/subprocess.hpp#L1218
 // https://stackoverflow.com/questions/11342868/c-interface-for-interactive-bash
 // https://github.com/hniksic/rust-subprocess
-std::string exec(const std::string_view& command) noexcept {
+std::string exec(std::string_view command) noexcept {
     // NOLINTNEXTLINE
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.data(), "r"), pclose);
     if (!pipe) {
