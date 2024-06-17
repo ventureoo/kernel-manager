@@ -85,23 +85,17 @@ auto get_current_scheduler() noexcept -> std::string {
 
 auto is_scx_service_enabled() noexcept -> bool {
     using namespace std::string_view_literals;
-    if (utils::exec("systemctl is-enabled scx") != "enabled"sv) {
-        return false;
-    }
-    return true;
+    return !utils::exec("systemctl is-enabled scx") != "enabled"sv;
 }
 
 auto is_scx_service_active() noexcept -> bool {
     using namespace std::string_view_literals;
-    if (utils::exec("systemctl is-active scx") != "active"sv) {
-        return false;
-    }
-    return true;
+    return !utils::exec("systemctl is-active scx") != "active"sv;
 }
 }  // namespace
 
 SchedExtWindow::SchedExtWindow(QWidget* parent)
-  : QMainWindow(parent) {
+  : QMainWindow(parent), m_sched_timer(new QTimer(this)) {
     m_ui->setupUi(this);
 
     setAttribute(Qt::WA_NativeWindow);
@@ -127,7 +121,7 @@ SchedExtWindow::SchedExtWindow(QWidget* parent)
 
     // setup timer
     using namespace std::chrono_literals;  // NOLINT
-    m_sched_timer = new QTimer(this);
+
     connect(m_sched_timer, &QTimer::timeout, this, &SchedExtWindow::update_current_sched);
     m_sched_timer->start(1s);
 

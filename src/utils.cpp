@@ -17,13 +17,13 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 #include "utils.hpp"
-#include "ini.hpp"
 
 #include <cerrno>   // for errno
 #include <cstdio>   // for fopen, fclose, fread, fseek, ftell, SEEK_END, SEEK_SET
 #include <cstdlib>  // for system
 
-#include <filesystem>
+#include <filesystem>  // for exists
+#include <fstream>     // for ofstream
 
 #include <fmt/core.h>
 
