@@ -19,6 +19,7 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
+#include "alpm_utils.hpp"
 #include "string_utils.hpp"
 
 #include <string>       // for string
@@ -46,17 +47,12 @@
 #pragma GCC diagnostic pop
 #endif
 
-#include <alpm.h>
-
 namespace utils {
 
 [[nodiscard]] auto read_whole_file(const std::string_view& filepath) noexcept -> std::string;
 bool write_to_file(const std::string_view& filepath, const std::string_view& data) noexcept;
 std::string exec(const std::string_view& command) noexcept;
 [[nodiscard]] std::string fix_path(std::string&& path) noexcept;
-
-alpm_handle_t* parse_alpm(std::string_view root, std::string_view dbpath, alpm_errno_t* err) noexcept;
-std::int32_t release_alpm(alpm_handle_t* handle, alpm_errno_t* err) noexcept;
 
 // Runs a command in a terminal, escalates using pkexec if escalate is true
 int runCmdTerminal(QString cmd, bool escalate) noexcept;

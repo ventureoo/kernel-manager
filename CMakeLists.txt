@@ -110,6 +110,8 @@ add_custom_command(
 )
 qt_add_executable(${PROJECT_NAME}
     src/ini.hpp
+    src/string_utils.hpp
+    src/alpm_utils.hpp src/alpm_utils.cpp
     src/utils.hpp src/utils.cpp
     src/kernel.hpp src/kernel.cpp
     src/aur_kernel.hpp src/aur_kernel.cpp

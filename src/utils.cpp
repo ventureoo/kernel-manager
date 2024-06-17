@@ -141,40 +141,6 @@ std::string fix_path(std::string&& path) noexcept {
     return std::move(path);
 }
 
-alpm_handle_t* parse_alpm(std::string_view root, std::string_view dbpath, alpm_errno_t* err) noexcept {
-    // Initialize alpm.
-    alpm_handle_t* alpm_handle = alpm_initialize(root.data(), dbpath.data(), err);
-
-    // Parse pacman config.
-    static constexpr auto pacman_conf_path = "/etc/pacman.conf";
-    static constexpr auto ignored_repo     = "testing";
-
-    const mINI::INIFile file(pacman_conf_path);
-    // next, create a structure that will hold data
-    mINI::INIStructure ini;
-
-    // now we can read the file
-    file.read(ini);
-    for (const auto& it : ini) {
-        const auto& section = it.first;
-        if (section == ignored_repo || section == "options") {
-            continue;
-        }
-        [[maybe_unused]] auto* db = alpm_register_syncdb(alpm_handle, section.c_str(), ALPM_SIG_USE_DEFAULT);
-    }
-
-    return alpm_handle;
-}
-
-std::int32_t release_alpm(alpm_handle_t* handle, alpm_errno_t* err) noexcept {
-    // Release libalpm handle
-    const std::int32_t ret = alpm_release(handle);
-
-    *err = alpm_errno(handle);
-
-    return ret;
-}
-
 void prepare_build_environment() noexcept {
     static const fs::path app_path       = utils::fix_path("~/.cache/cachyos-km");
     static const fs::path pkgbuilds_path = utils::fix_path("~/.cache/cachyos-km/pkgbuilds");
