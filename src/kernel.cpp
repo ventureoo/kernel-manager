@@ -128,7 +128,7 @@ bool Kernel::remove() const noexcept {
     g_kernel_removal_list.push_back(m_name);
 
     const auto& append_to_removal_list = [this](alpm_pkg_t* sync_pkg) {
-        if (sync_pkg != nullptr) {
+        if (sync_pkg == nullptr) {
             return;
         }
 
