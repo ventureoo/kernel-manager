@@ -23,6 +23,7 @@
 #include "kernel.hpp"
 #include "utils.hpp"
 
+#include <filesystem>
 #include <future>
 #include <span>
 #include <thread>
@@ -40,6 +41,8 @@
 #include <QTimer>
 #include <QTreeWidgetItem>
 #include <QtConcurrent/QtConcurrent>
+
+namespace fs = std::filesystem;
 
 namespace {
 bool install_packages(alpm_handle_t* handle, const std::span<Kernel>& kernels, const std::span<std::string>& selected_list) {
@@ -177,6 +180,11 @@ MainWindow::MainWindow(QWidget* parent)
     m_worker_th->setObjectName("WorkerThread");
 
     m_ui->ok->setEnabled(false);
+
+    // Hide sched-ext button in case we are not on kernel with sched-ext
+    if (!fs::exists("/sys/kernel/sched_ext/state")) {
+        m_ui->schedext->setHidden(true);
+    }
 
     // Setup progress dialog
     set_progress_dialog();
