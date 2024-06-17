@@ -85,12 +85,12 @@ auto get_current_scheduler() noexcept -> std::string {
 
 auto is_scx_service_enabled() noexcept -> bool {
     using namespace std::string_view_literals;
-    return !utils::exec("systemctl is-enabled scx") != "enabled"sv;
+    return utils::exec("systemctl is-enabled scx") == "enabled"sv;
 }
 
 auto is_scx_service_active() noexcept -> bool {
     using namespace std::string_view_literals;
-    return !utils::exec("systemctl is-active scx") != "active"sv;
+    return utils::exec("systemctl is-active scx") == "active"sv;
 }
 }  // namespace
 
