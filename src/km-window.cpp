@@ -309,7 +309,9 @@ void MainWindow::build_change_list(QTreeWidgetItem* item) noexcept {
         return;
     }
 
-    if (item->checkState(0) == Qt::Checked) {
+    if (immutable == "true" && item->checkState(0) == Qt::Checked) {
+        m_change_list.removeOne(item_text);
+    } else if (item->checkState(0) == Qt::Checked) {
         m_ui->ok->setEnabled(true);
         m_change_list.append(item_text);
     } else {
