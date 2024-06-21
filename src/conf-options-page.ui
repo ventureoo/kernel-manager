@@ -609,6 +609,35 @@
          </widget>
         </item>
         <item>
+         <widget class="QWidget" name="build_debug_widget" native="true">
+          <layout class="QHBoxLayout" name="build_debug_horizontal_layout">
+           <item>
+            <widget class="QLabel" name="build_debug_label">
+             <property name="text">
+              <string>Include vmlinux with debug informations/symbols</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="b_horizontal_spacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="build_debug_check"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
          <widget class="QWidget" name="hugepage_widget" native="true">
           <layout class="QHBoxLayout" name="hugepage_horizontal_layout">
            <item>

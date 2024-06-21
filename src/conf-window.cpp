@@ -317,6 +317,7 @@ std::string ConfWindow::get_all_set_values() const noexcept {
     result += convert_to_var_assign_empty_wrapped("damon", checkstate_checked(options_page_ui_obj->damon_check));
     result += convert_to_var_assign_empty_wrapped("builtin_zfs", checkstate_checked(options_page_ui_obj->builtin_zfs_check));
     result += convert_to_var_assign_empty_wrapped("builtin_nvidia", checkstate_checked(options_page_ui_obj->builtin_nvidia_check));
+    result += convert_to_var_assign_empty_wrapped("build_debug", checkstate_checked(options_page_ui_obj->build_debug_check));
 
     // combobox values
     result += convert_to_var_assign("HZ_ticks", get_hz_tick(static_cast<size_t>(options_page_ui_obj->hzticks_combo_box->currentIndex())));

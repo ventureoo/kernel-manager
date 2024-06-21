@@ -19,6 +19,7 @@
         "lto": "_use_llvm_lto",
         "builtin_zfs": "_build_zfs",
         "builtin_nvidia": "_build_nvidia",
-        "hugepage": "_hugepage"
+        "hugepage": "_hugepage",
+        "build_debug": "_build_debug"
     }
 }
