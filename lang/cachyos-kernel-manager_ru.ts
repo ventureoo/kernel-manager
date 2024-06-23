@@ -79,59 +79,66 @@
         <translation>Выбрать PREEMPT</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="443"/>
+        <location filename="../src/conf-options-page.ui" line="712"/>
+        <source>Build kernel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Enable multigenerational LRU</source>
-        <translation>Включить multigenerational LRU</translation>
+        <translation type="vanished">Включить multigenerational LRU</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="472"/>
         <source>Enable per-VMA locking</source>
-        <translation>Включить поддержку раздельных VMA блокировок</translation>
+        <translation type="vanished">Включить поддержку раздельных VMA блокировок</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="501"/>
+        <location filename="../src/conf-options-page.ui" line="443"/>
         <source>Enable DAMON</source>
         <translation>Включить DAMON</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="530"/>
+        <location filename="../src/conf-options-page.ui" line="472"/>
         <source>CPU compiler optimizations</source>
         <translation>Оптимизация для процессора</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="559"/>
+        <location filename="../src/conf-options-page.ui" line="501"/>
         <source>Apply automatic CPU Optimization</source>
         <translation>Применяйте автоматическую оптимизацию процессора</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="588"/>
+        <location filename="../src/conf-options-page.ui" line="530"/>
         <source>Enable LTO</source>
         <translation>Включить LTO</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="617"/>
+        <location filename="../src/conf-options-page.ui" line="559"/>
         <source>Build the ZFS module</source>
         <translation>Собрать модуль ZFS</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="646"/>
+        <location filename="../src/conf-options-page.ui" line="588"/>
         <source>Build the NVIDIA module</source>
         <translation>Собрать модуль NVIDIA</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="675"/>
+        <location filename="../src/conf-options-page.ui" line="617"/>
+        <source>Include vmlinux with debug informations/symbols</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/conf-options-page.ui" line="646"/>
         <source>Transparent Hugepages</source>
         <translation>Установить режим работы для THP (Transparent Hugepages)</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="734"/>
+        <location filename="../src/conf-options-page.ui" line="705"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="741"/>
         <source>Execute</source>
-        <translation>Выполнить</translation>
+        <translation type="vanished">Выполнить</translation>
     </message>
 </context>
 <context>
@@ -165,52 +172,52 @@
         <translation>Патчи</translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="381"/>
+        <location filename="../src/conf-window.cpp" line="378"/>
         <source>Bore - Burst-Oriented Response Enhancer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="382"/>
+        <location filename="../src/conf-window.cpp" line="379"/>
         <source>RC - Release Candidate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="383"/>
+        <location filename="../src/conf-window.cpp" line="380"/>
         <source>RT - Realtime kernel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="380"/>
+        <location filename="../src/conf-window.cpp" line="377"/>
         <source>CachyOS - BORE + SCHED-EXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="384"/>
+        <location filename="../src/conf-window.cpp" line="381"/>
         <source>RT-Bore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="385"/>
+        <location filename="../src/conf-window.cpp" line="382"/>
         <source>Sched-Ext - BPF extensible scheduler class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="474"/>
+        <location filename="../src/conf-window.cpp" line="455"/>
         <source>Select one or more patch files</source>
         <translation>Выберите один или несколько файлов патчей</translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="476"/>
+        <location filename="../src/conf-window.cpp" line="457"/>
         <source>Patch file (*.patch)</source>
         <translation>Файл патча (*.patch)</translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="496"/>
+        <location filename="../src/conf-window.cpp" line="477"/>
         <source>Enter URL patch</source>
         <translation>Введите URL патча</translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="497"/>
+        <location filename="../src/conf-window.cpp" line="478"/>
         <source>Patch URL:</source>
         <translation>URL патча:</translation>
     </message>
@@ -261,45 +268,50 @@
     </message>
     <message>
         <location filename="../src/km-window.ui" line="116"/>
+        <source>sched-ext scheduler config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/km-window.ui" line="123"/>
         <source>Configure</source>
         <translation>Настроить</translation>
     </message>
     <message>
-        <location filename="../src/km-window.ui" line="130"/>
+        <location filename="../src/km-window.ui" line="137"/>
         <source>Execute</source>
         <translation>Выполнить</translation>
     </message>
     <message>
-        <location filename="../src/km-window.ui" line="123"/>
+        <location filename="../src/km-window.ui" line="130"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../src/km-window.cpp" line="141"/>
+        <location filename="../src/km-window.cpp" line="144"/>
         <source>Failed to initialize alpm handle (%1)</source>
         <translation>Не удалось инициализировать хэндл alpm (%1)</translation>
     </message>
     <message>
-        <location filename="../src/km-window.cpp" line="154"/>
+        <location filename="../src/km-window.cpp" line="157"/>
         <source>Failed to release alpm handle (%1)</source>
         <translation>Не удалось освободить хэндл alpm (%1)</translation>
     </message>
     <message>
-        <location filename="../src/km-window.cpp" line="351"/>
+        <location filename="../src/km-window.cpp" line="362"/>
         <source>Please wait...
 Initializing kernels..</source>
         <translation>Пожалуйста, подождите...
 Инициализация ядер..</translation>
     </message>
     <message>
-        <location filename="../src/km-window.cpp" line="194"/>
+        <location filename="../src/km-window.cpp" line="202"/>
         <source>Failed to clone repository!
 Please check your internet connection and try again</source>
         <translation>Не удалось клонировать репозиторий!
 Пожалуйста, проверьте подключение к Интернету и повторите попытку</translation>
     </message>
     <message>
-        <location filename="../src/km-window.cpp" line="220"/>
+        <location filename="../src/km-window.cpp" line="228"/>
         <source>No kernels found!
 Please run `pacman -Sy` to update DB!
 This is needed for the app to work properly</source>
@@ -308,8 +320,8 @@ This is needed for the app to work properly</source>
 Это необходимо для правильной работы приложения</translation>
     </message>
     <message>
-        <location filename="../src/km-window.cpp" line="268"/>
-        <location filename="../src/km-window.cpp" line="330"/>
+        <location filename="../src/km-window.cpp" line="277"/>
+        <location filename="../src/km-window.cpp" line="341"/>
         <source>Please wait...
 We are preparing configuration window for you
 cloning PKGBUILDs..</source>
