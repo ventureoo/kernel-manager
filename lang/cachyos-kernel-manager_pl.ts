@@ -355,7 +355,7 @@ Initializing kernels..</source>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="98"/>
-        <source>TextLabel</source>
+        <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
