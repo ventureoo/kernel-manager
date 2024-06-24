@@ -335,37 +335,37 @@ cloning PKGBUILDs..</source>
     <message>
         <location filename="../src/schedext-window.ui" line="17"/>
         <source>CachyOS Configure sched-ext</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="40"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Configure sched-ext scheduler:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Настройка sched-ext планировщика:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="88"/>
         <source> Select sched-ext scheduler:</source>
-        <translation type="unfinished"></translation>
+        <translation> Выберите sched-ext планировщик:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="98"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <source>unknown</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="105"/>
         <source>Running sched-ext scheduler:</source>
-        <translation type="unfinished"></translation>
+        <translation>Текущий sched-ext планировщик:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="156"/>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation>Отключить</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="163"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Применить</translation>
     </message>
 </context>
 </TS>

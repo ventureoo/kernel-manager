@@ -95,7 +95,7 @@
       <item row="0" column="3">
        <widget class="QLabel" name="current_sched_label">
         <property name="text">
-         <string>TextLabel</string>
+         <string>unknown</string>
         </property>
        </widget>
       </item>
