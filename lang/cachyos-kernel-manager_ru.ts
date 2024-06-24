@@ -11,7 +11,7 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="53"/>
         <source>$pkgbase</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="66"/>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="712"/>
         <source>Build kernel</source>
-        <translation type="unfinished"></translation>
+        <translation>Собрать ядро</translation>
     </message>
     <message>
         <source>Enable multigenerational LRU</source>
@@ -124,7 +124,7 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="617"/>
         <source>Include vmlinux with debug informations/symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить vmlinux с отладочной информацией/символами</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="646"/>
@@ -174,32 +174,32 @@
     <message>
         <location filename="../src/conf-window.cpp" line="378"/>
         <source>Bore - Burst-Oriented Response Enhancer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="379"/>
         <source>RC - Release Candidate</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="380"/>
         <source>RT - Realtime kernel</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="377"/>
         <source>CachyOS - BORE + SCHED-EXT</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="381"/>
         <source>RT-Bore</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="382"/>
         <source>Sched-Ext - BPF extensible scheduler class</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="455"/>
@@ -269,7 +269,7 @@
     <message>
         <location filename="../src/km-window.ui" line="116"/>
         <source>sched-ext scheduler config</source>
-        <translation type="unfinished"></translation>
+        <translation>конфигурация планировщика sched-ext</translation>
     </message>
     <message>
         <location filename="../src/km-window.ui" line="123"/>
