@@ -336,4 +336,42 @@ Initializing kernels..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>SchedExtWindow</name>
+    <message>
+        <location filename="../src/schedext-window.ui" line="17"/>
+        <source>CachyOS Configure sched-ext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/schedext-window.ui" line="40"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Configure sched-ext scheduler:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/schedext-window.ui" line="88"/>
+        <source> Select sched-ext scheduler:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/schedext-window.ui" line="98"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/schedext-window.ui" line="105"/>
+        <source>Running sched-ext scheduler:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/schedext-window.ui" line="156"/>
+        <source>Disable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/schedext-window.ui" line="163"/>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
