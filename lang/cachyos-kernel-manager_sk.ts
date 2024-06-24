@@ -71,7 +71,7 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="712"/>
         <source>Build kernel</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvor jadro</translation>
     </message>
     <message>
         <source>Enable multigenerational LRU</source>
@@ -109,7 +109,7 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="617"/>
         <source>Include vmlinux with debug informations/symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahrnúť vmlinux s debug informáciami/symbolmi</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="646"/>
@@ -268,7 +268,7 @@
     <message>
         <location filename="../src/km-window.ui" line="116"/>
         <source>sched-ext scheduler config</source>
-        <translation type="unfinished"></translation>
+        <translationn>konfigurácia sched-ext plánovača</translation>
     </message>
     <message>
         <location filename="../src/km-window.ui" line="123"/>
