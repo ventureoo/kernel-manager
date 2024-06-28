@@ -268,7 +268,7 @@
     <message>
         <location filename="../src/km-window.ui" line="116"/>
         <source>sched-ext scheduler config</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia sched-ext</translation>
     </message>
     <message>
         <location filename="../src/km-window.ui" line="123"/>
@@ -298,7 +298,7 @@ Jest to wymagana do prawidłowego działania pakietu</translation>
         <location filename="../src/km-window.cpp" line="202"/>
         <source>Failed to clone repository!
 Please check your internet connection and try again</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/km-window.cpp" line="277"/>
@@ -341,37 +341,37 @@ Initializing kernels..</source>
     <message>
         <location filename="../src/schedext-window.ui" line="17"/>
         <source>CachyOS Configure sched-ext</source>
-        <translation type="unfinished"></translation>
+        <translation>CachyOS Skonfiguruj sched-ext</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="40"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Configure sched-ext scheduler:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Skonfiguruj planistę sched-ext:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="88"/>
         <source> Select sched-ext scheduler:</source>
-        <translation type="unfinished"></translation>
+        <translation> Wybierz planistę sched-ext:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="98"/>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>nieznany</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="105"/>
         <source>Running sched-ext scheduler:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktywny planista sched ext:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="156"/>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyłącz</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="163"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Zastosuj</translation>
     </message>
 </context>
 </TS>
