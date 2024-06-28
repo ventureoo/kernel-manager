@@ -103,7 +103,8 @@ SchedExtWindow::SchedExtWindow(QWidget* parent)
 
     // Selecting the scheduler
     QStringList sched_names;
-    sched_names << "scx_central"
+    sched_names << "scx_bpfland"
+                << "scx_central"
                 << "scx_flatcg"
                 << "scx_lavd"
                 << "scx_layered"
