@@ -61,6 +61,7 @@ class Kernel {
         constexpr std::string_view next{"next"};
         constexpr std::string_view mainline{"mainline"};
         constexpr std::string_view git{"git"};
+        constexpr std::string_view rc{"rc"};
 
         auto found = ranges::search(m_name, lto);
         if (!found.empty()) {
@@ -89,6 +90,10 @@ class Kernel {
         found = ranges::search(m_name, git);
         if (!found.empty()) {
             return "master branch"sv;
+        }
+        found = ranges::search(m_name, rc);
+        if (!found.empty()) {
+            return "release candidate"sv;
         }
 
         return "stable"sv;
