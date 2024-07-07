@@ -53,6 +53,7 @@ class Kernel {
     explicit Kernel(alpm_handle_t* handle, alpm_pkg_t* pkg, alpm_pkg_t* headers, const std::string_view& repo, const std::string_view& raw) : m_name(alpm_pkg_get_name(pkg)), m_repo(repo), m_raw(raw), m_pkg(pkg), m_headers(headers), m_handle(handle) { }
 
     constexpr std::string_view category() const noexcept {
+        using namespace std::string_view_literals;
         constexpr std::string_view lto{"lto"};
         constexpr std::string_view lts{"lts"};
         constexpr std::string_view zen{"zen"};
@@ -63,34 +64,34 @@ class Kernel {
 
         auto found = ranges::search(m_name, lto);
         if (!found.empty()) {
-            return "lto optimized";
+            return "lto optimized"sv;
         }
         found = ranges::search(m_name, lts);
         if (!found.empty()) {
-            return "longterm";
+            return "longterm"sv;
         }
         found = ranges::search(m_name, zen);
         if (!found.empty()) {
-            return "zen-kernel";
+            return "zen-kernel"sv;
         }
         found = ranges::search(m_name, hardened);
         if (!found.empty()) {
-            return "hardened-kernel";
+            return "hardened-kernel"sv;
         }
         found = ranges::search(m_name, next);
         if (!found.empty()) {
-            return "next release";
+            return "next release"sv;
         }
         found = ranges::search(m_name, mainline);
         if (!found.empty()) {
-            return "mainline branch";
+            return "mainline branch"sv;
         }
         found = ranges::search(m_name, git);
         if (!found.empty()) {
-            return "master branch";
+            return "master branch"sv;
         }
 
-        return "stable";
+        return "stable"sv;
     }
     std::string version() noexcept;
 
