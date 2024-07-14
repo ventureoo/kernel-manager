@@ -23,13 +23,12 @@
 #include "kernel.hpp"
 #include "utils.hpp"
 
-#include <filesystem>
+#include <algorithm>   // for any_of, find_if
+#include <filesystem>  // for exists
 #include <future>
-#include <span>
-#include <thread>
-
-#include <range/v3/algorithm/any_of.hpp>
-#include <range/v3/algorithm/find_if.hpp>
+#include <ranges>  // for ranges::*
+#include <span>    // for span
+#include <thread>  // for this_thread
 
 #include <fmt/core.h>
 
@@ -47,7 +46,7 @@ namespace fs = std::filesystem;
 namespace {
 bool install_packages(alpm_handle_t* handle, const std::span<Kernel>& kernels, const std::span<std::string>& selected_list) {
     for (const auto& selected : selected_list) {
-        const auto& kernel = ranges::find_if(kernels, [selected](auto&& el) { return el.get_raw() == selected; });
+        const auto& kernel = std::ranges::find_if(kernels, [selected](auto&& el) { return el.get_raw() == selected; });
         if ((kernel != kernels.end()) && (!kernel->is_installed() || kernel->is_update_available())) {
             if (!kernel->install()) {
                 fmt::print(stderr, "failed to add package to be installed ({})\n", alpm_strerror(alpm_errno(handle)));
@@ -59,7 +58,7 @@ bool install_packages(alpm_handle_t* handle, const std::span<Kernel>& kernels, c
 
 bool remove_packages(alpm_handle_t* handle, const std::span<Kernel>& kernels, const std::span<std::string>& selected_list) {
     for (const auto& selected : selected_list) {
-        const auto& kernel = ranges::find_if(kernels, [selected](auto&& el) { return el.get_raw() == selected; });
+        const auto& kernel = std::ranges::find_if(kernels, [selected](auto&& el) { return el.get_raw() == selected; });
         if ((kernel != kernels.end()) && (kernel->is_installed())) {
             if (!kernel->remove()) {
                 fmt::print(stderr, "failed to add package to be removed ({})\n", alpm_strerror(alpm_errno(handle)));
@@ -76,10 +75,10 @@ bool is_kernels_change_state(alpm_handle_t* handle, std::span<std::string_view> 
     }
     auto* local_db = alpm_get_localdb(handle);
 
-    if (ranges::any_of(kernel_install_list, [local_db](auto&& kernel_install) { return nullptr != alpm_db_get_pkg(local_db, kernel_install.data()); })) {
+    if (std::ranges::any_of(kernel_install_list, [local_db](auto&& kernel_install) { return nullptr != alpm_db_get_pkg(local_db, kernel_install.data()); })) {
         return true;
     }
-    if (ranges::any_of(kernel_removal_list, [local_db](auto&& kernel_removal) { return nullptr == alpm_db_get_pkg(local_db, kernel_removal.data()); })) {
+    if (std::ranges::any_of(kernel_removal_list, [local_db](auto&& kernel_removal) { return nullptr == alpm_db_get_pkg(local_db, kernel_removal.data()); })) {
         return true;
     }
 
