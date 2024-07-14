@@ -23,8 +23,10 @@
 #include <cstdio>
 #include <cstdlib>
 
-#include <filesystem>
-#include <string_view>
+#include <algorithm>    // for for_each
+#include <filesystem>   // for permissions
+#include <ranges>       // for ranges::*
+#include <string_view>  // for string_view
 
 #if defined(__clang__)
 #pragma clang diagnostic push
@@ -40,11 +42,6 @@
 #endif
 
 #include <glib.h>
-
-#include <range/v3/algorithm/for_each.hpp>
-#include <range/v3/range/conversion.hpp>
-#include <range/v3/view/filter.hpp>
-#include <range/v3/view/join.hpp>
 
 #include <QFileDialog>
 #include <QInputDialog>
@@ -225,12 +222,12 @@ auto get_source_array_from_pkgbuild(std::string_view kernel_name_path, std::stri
 
 bool insert_new_source_array_into_pkgbuild(std::string_view kernel_name_path, QListWidget* list_widget, const std::vector<std::string>& orig_source_array) noexcept {
     static constexpr auto functor = [](auto&& rng) {
-        auto rng_str = std::string_view(&*rng.begin(), static_cast<size_t>(ranges::distance(rng)));
+        auto rng_str = std::string_view(&*rng.begin(), static_cast<size_t>(std::ranges::distance(rng)));
         return !rng_str.ends_with(".patch");
     };
 
     std::vector<std::string> array_entries{};
-    ranges::for_each(orig_source_array | ranges::views::filter(functor), [&](auto&& rng) { array_entries.emplace_back(fmt::format(FMT_COMPILE("\"{}\""), rng)); });
+    std::ranges::for_each(orig_source_array | std::ranges::views::filter(functor), [&](auto&& rng) { array_entries.emplace_back(fmt::format(FMT_COMPILE("\"{}\""), rng)); });
 
     // Apply flag to each item in list widget
     for (int i = 0; i < list_widget->count(); ++i) {
@@ -240,7 +237,7 @@ bool insert_new_source_array_into_pkgbuild(std::string_view kernel_name_path, QL
     const auto& pkgbuild_path = fmt::format(FMT_COMPILE("{}/PKGBUILD"), kernel_name_path);
     auto pkgbuildsrc          = utils::read_whole_file(pkgbuild_path);
 
-    const auto& new_source_array = fmt::format(FMT_COMPILE("source=(\n{})\n"), array_entries | ranges::views::join('\n') | ranges::to<std::string>());
+    const auto& new_source_array = fmt::format(FMT_COMPILE("source=(\n{})\n"), array_entries | std::ranges::views::join_with('\n') | std::ranges::to<std::string>());
     if (auto foundpos = pkgbuildsrc.find("prepare()"); foundpos != std::string::npos) {
         if (auto last_newline_before = pkgbuildsrc.find_last_of('\n', foundpos); last_newline_before != std::string::npos) {
             pkgbuildsrc.insert(last_newline_before, new_source_array);
