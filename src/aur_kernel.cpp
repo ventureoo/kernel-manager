@@ -19,14 +19,14 @@
 #include "aur_kernel.hpp"
 #include "utils.hpp"
 
-#include <algorithm>
-#include <cstdio>
-#include <cstdlib>
-#include <filesystem>
+#include <cstdio>   // for perror
+#include <cstdlib>  // for system
 
-#include <range/v3/algorithm/search.hpp>
+#include <algorithm>   // for search
+#include <filesystem>  // for path, exists
+#include <ranges>      // for ranges::*
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 namespace fs = std::filesystem;
 
@@ -74,7 +74,7 @@ void install_aur_kernels(std::span<std::string_view> kernel_list) noexcept {
     using namespace std::literals;
 
     for (auto&& kernel_name : kernel_list) {
-        if (auto found = ranges::search(kernel_name, "headers"sv); !found.empty()) {
+        if (auto found = std::ranges::search(kernel_name, "headers"sv); !found.empty()) {
             continue;
         }
 
