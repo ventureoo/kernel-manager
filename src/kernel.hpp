@@ -19,29 +19,11 @@
 #ifndef KERNEL_HPP
 #define KERNEL_HPP
 
-#include <string>
-#include <string_view>
-#include <vector>
-
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wold-style-cast"
-#elif defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnull-dereference"
-#pragma GCC diagnostic ignored "-Wuseless-cast"
-#pragma GCC diagnostic ignored "-Wold-style-cast"
-#endif
-
-#include <range/v3/algorithm/copy.hpp>
-#include <range/v3/algorithm/find_if.hpp>
-#include <range/v3/algorithm/search.hpp>
-
-#if defined(__clang__)
-#pragma clang diagnostic pop
-#elif defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
+#include <algorithm>    // for search
+#include <ranges>       // for ranges::*
+#include <string>       // for string
+#include <string_view>  // for string_view
+#include <vector>       // for vector
 
 #include <alpm.h>
 
@@ -63,35 +45,35 @@ class Kernel {
         constexpr std::string_view git{"git"};
         constexpr std::string_view rc{"rc"};
 
-        auto found = ranges::search(m_name, lto);
+        auto found = std::ranges::search(m_name, lto);
         if (!found.empty()) {
             return "lto optimized"sv;
         }
-        found = ranges::search(m_name, lts);
+        found = std::ranges::search(m_name, lts);
         if (!found.empty()) {
             return "longterm"sv;
         }
-        found = ranges::search(m_name, zen);
+        found = std::ranges::search(m_name, zen);
         if (!found.empty()) {
             return "zen-kernel"sv;
         }
-        found = ranges::search(m_name, hardened);
+        found = std::ranges::search(m_name, hardened);
         if (!found.empty()) {
             return "hardened-kernel"sv;
         }
-        found = ranges::search(m_name, next);
+        found = std::ranges::search(m_name, next);
         if (!found.empty()) {
             return "next release"sv;
         }
-        found = ranges::search(m_name, mainline);
+        found = std::ranges::search(m_name, mainline);
         if (!found.empty()) {
             return "mainline branch"sv;
         }
-        found = ranges::search(m_name, git);
+        found = std::ranges::search(m_name, git);
         if (!found.empty()) {
             return "master branch"sv;
         }
-        found = ranges::search(m_name, rc);
+        found = std::ranges::search(m_name, rc);
         if (!found.empty()) {
             return "release candidate"sv;
         }

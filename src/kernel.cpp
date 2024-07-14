@@ -20,28 +20,12 @@
 #include "aur_kernel.hpp"
 #include "utils.hpp"
 
-#include <algorithm>
 #include <cstdio>
-#include <filesystem>
-#include <memory>
 
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wold-style-cast"
-#elif defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wuseless-cast"
-#pragma GCC diagnostic ignored "-Wold-style-cast"
-#endif
-
-#include <range/v3/algorithm/any_of.hpp>
-#include <range/v3/algorithm/find_if.hpp>
-
-#if defined(__clang__)
-#pragma clang diagnostic pop
-#elif defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
+#include <algorithm>   // for any_of, find_if
+#include <filesystem>  // for exists
+#include <ranges>      // for ranges::*
+#include <utility>     // for move
 
 #include <fmt/compile.h>
 #include <fmt/core.h>
@@ -59,7 +43,7 @@ static const bool is_root_on_zfs = utils::exec("findmnt -ln -o FSTYPE /") == "zf
 // NOLINTNEXTLINE
 static const bool is_nvidia_card_prebuild_module = [] {
     const auto& profile_names = utils::exec("chwd --list -d | grep Name | awk '{print $4}'");
-    return ranges::any_of(utils::make_split_view(profile_names, '\n'), [](auto&& profile_name) { return profile_name == "nvidia-dkms" || profile_name == "nvidia-dkms.40xxcards"; });
+    return std::ranges::any_of(utils::make_split_view(profile_names, '\n'), [](auto&& profile_name) { return profile_name == "nvidia-dkms" || profile_name == "nvidia-dkms.40xxcards"; });
 }();
 
 }  // namespace
@@ -184,7 +168,7 @@ std::vector<Kernel> Kernel::get_kernels(alpm_handle_t* handle) noexcept {
         for (alpm_list_t* j = ret_list; j != nullptr; j = j->next) {
             auto* pkg            = reinterpret_cast<alpm_pkg_t*>(j->data);
             std::string pkg_name = alpm_pkg_get_name(pkg);
-            const auto& found    = ranges::search(pkg_name, ignored_pkg);
+            const auto& found    = std::ranges::search(pkg_name, ignored_pkg);
             if (!found.empty()) {
                 continue;
             }
@@ -239,7 +223,7 @@ std::vector<Kernel> Kernel::get_kernels(alpm_handle_t* handle) noexcept {
         for (auto&& aur_kernel_header : aur_kernels_headers) {
             auto&& aur_kernel = std::string{aur_kernel_header};
             utils::replace_all(aur_kernel, "-headers", "");
-            if (ranges::find_if(kernels, [&](auto& kernel) { return kernel.m_name == aur_kernel; }) != kernels.end()) {
+            if (std::ranges::find_if(kernels, [&](auto& kernel) { return kernel.m_name == aur_kernel; }) != kernels.end()) {
                 continue;
             }
             Kernel kernel_obj{};
