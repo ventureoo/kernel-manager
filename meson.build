@@ -127,10 +127,6 @@ endif
 add_project_arguments(cc.get_supported_arguments(possible_cc_flags), language : 'cpp')
 
 deps = [qt6_dep, fmt, libalpm, glib]
-if cc.get_id() == 'clang'
-  ranges = dependency('range-v3', version : ['>=0.11.0'])
-  deps += [ranges]
-endif
 
 prep = qt6.compile_moc(
   headers : ['src/km-window.hpp', 'src/conf-window.hpp', 'src/conf-options-page.hpp', 'src/conf-patches-page.hpp'] # These need to be fed through the moc tool before use.

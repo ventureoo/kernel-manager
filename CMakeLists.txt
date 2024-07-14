@@ -51,12 +51,6 @@ CPMAddPackage(
   GIT_TAG c241d64279d30a013be2601d42564280f950bcb8
   EXCLUDE_FROM_ALL YES
 )
-CPMAddPackage(
-  NAME range-v3
-  GITHUB_REPOSITORY ericniebler/range-v3
-  GIT_TAG 9aa41d6b8ded2cf5e8007e66a0efd1ab33dbf9a5
-  EXCLUDE_FROM_ALL YES
-)
 
 find_package(PolkitQt6-1 REQUIRED)
 
@@ -138,7 +132,7 @@ enable_sanitizers(project_options)
 
 include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE project_warnings project_options Qt6::Widgets Qt6::Concurrent Threads::Threads fmt::fmt range-v3::range-v3 frozen::frozen PkgConfig::LIBALPM PkgConfig::LIBGLIB)
+target_link_libraries(${PROJECT_NAME} PRIVATE project_warnings project_options Qt6::Widgets Qt6::Concurrent Threads::Threads fmt::fmt frozen::frozen PkgConfig::LIBALPM PkgConfig::LIBGLIB)
 
 option(ENABLE_UNITY "Enable Unity builds of projects" OFF)
 if(ENABLE_UNITY)
