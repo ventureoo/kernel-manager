@@ -13,6 +13,7 @@
         "HZ_ticks": "_HZ_ticks",
         "tickrate": "_tickrate",
         "preempt": "_preempt",
+        "hugepage": "_hugepage",
         "damon": "_damon",
         "cpu_opt": "_processor_opt",
         "auto_optim": "_use_auto_optimization",
@@ -20,7 +21,6 @@
         "builtin_zfs": "_build_zfs",
         "builtin_nvidia": "_build_nvidia",
         "builtin_nvidia_open": "_build_nvidia_open",
-        "hugepage": "_hugepage",
         "build_debug": "_build_debug"
     }
 }
