@@ -69,7 +69,7 @@
         <translation>preempt belirle</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="617"/>
+        <location filename="../src/conf-options-page.ui" line="646"/>
         <source>Build the open NVIDIA module</source>
         <translation type="unfinished"></translation>
     </message>
@@ -87,37 +87,37 @@
         <translation type="vanished">per-VMA locking etkinleştirilsin</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="443"/>
+        <location filename="../src/conf-options-page.ui" line="472"/>
         <source>Enable DAMON</source>
         <translation>DAMON etkinleştirilsin</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="472"/>
+        <location filename="../src/conf-options-page.ui" line="501"/>
         <source>CPU compiler optimizations</source>
         <translation>İşlemci derleme iyileştirmeleri</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="501"/>
+        <location filename="../src/conf-options-page.ui" line="530"/>
         <source>Apply automatic CPU Optimization</source>
         <translation>Otomatik işlemci iyileştirmeleri uygulansın</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="530"/>
+        <location filename="../src/conf-options-page.ui" line="559"/>
         <source>Enable LTO</source>
         <translation>LTO etkinleştirilsin</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="559"/>
+        <location filename="../src/conf-options-page.ui" line="588"/>
         <source>Build the ZFS module</source>
         <translation>ZFS modülünü yapılandır</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="646"/>
+        <location filename="../src/conf-options-page.ui" line="675"/>
         <source>Include vmlinux with debug informations/symbols</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="675"/>
+        <location filename="../src/conf-options-page.ui" line="443"/>
         <source>Transparent Hugepages</source>
         <translation>Saydam HugePage&apos;ler</translation>
     </message>
@@ -141,7 +141,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="588"/>
+        <location filename="../src/conf-options-page.ui" line="617"/>
         <source>Build the NVIDIA module</source>
         <translation>NVIDIA modülünü yapılandır</translation>
     </message>
