@@ -56,19 +56,6 @@
     </item>
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <spacer name="horizontalSpacer_6">
-        <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="0" column="4">
        <spacer name="horizontalSpacer_5">
         <property name="orientation">
@@ -82,6 +69,13 @@
         </property>
        </spacer>
       </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="running_scheduler_label">
+        <property name="text">
+         <string>Running sched-ext scheduler:</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QLabel" name="scheduler_select_label">
         <property name="text">
@@ -92,6 +86,19 @@
       <item row="1" column="3">
        <widget class="QComboBox" name="schedext_combo_box"/>
       </item>
+      <item row="0" column="0">
+       <spacer name="horizontalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
       <item row="0" column="3">
        <widget class="QLabel" name="current_sched_label">
         <property name="text">
@@ -99,12 +106,15 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="running_scheduler_label">
+      <item row="2" column="1">
+       <widget class="QLabel" name="scheduler_set_flags_label">
         <property name="text">
-         <string>Running sched-ext scheduler:</string>
+         <string>Set sched-ext scheduler flags:</string>
         </property>
        </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLineEdit" name="schedext_flags_edit"/>
       </item>
      </layout>
     </item>
