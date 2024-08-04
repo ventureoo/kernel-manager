@@ -24,7 +24,7 @@ jobs:
 
       - name: install deps
         run: |
-          pacman -Syu --noconfirm cmake pkg-config ninja clang mold llvm libc++ qt6-base qt6-tools polkit-qt6 python git
+          pacman -Syu --noconfirm cmake pkg-config ninja clang rust mold llvm libc++ qt6-base qt6-tools polkit-qt6 python git
         shell: bash
 
       - name: Configure CMake
