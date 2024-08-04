@@ -67,6 +67,8 @@ class ConfWindow final : public QMainWindow {
  private:
     void on_cancel() noexcept;
     void on_execute() noexcept;
+    void on_save() noexcept;
+    void on_load() noexcept;
 
     bool m_running{};
     std::vector<std::string> m_previously_set_options{};

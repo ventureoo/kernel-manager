@@ -18,6 +18,7 @@
 
 #include "conf-window.hpp"
 #include "compile_options.hpp"
+#include "config-options.hpp"
 #include "utils.hpp"
 
 #include <cstdio>
@@ -46,6 +47,7 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QLineEdit>
+#include <QMessageBox>
 #include <QStringList>
 
 #if defined(__clang__)
@@ -78,7 +80,7 @@ namespace fs = std::filesystem;
  * Used to define lookup values of option.
  */
 #define GENERATE_CONST_LOOKUP_VALUES(name, ...)                                       \
-    [[gnu::pure]] consteval ssize_t lookup_##name(std::string_view needle) noexcept { \
+    [[gnu::pure]] constexpr ssize_t lookup_##name(std::string_view needle) noexcept { \
         constexpr std::array list_##name{__VA_ARGS__};                                \
         for (size_t i = 0; i < list_##name.size(); ++i) {                             \
             if (std::string_view{list_##name[i]} == needle) {                         \
@@ -100,12 +102,12 @@ namespace fs = std::filesystem;
 namespace {
 
 GENERATE_CONST_LOOKUP_OPTION_VALUES(kernel_name, "cachyos", "bore", "rc", "rt", "rt-bore", "sched-ext")
-GENERATE_CONST_OPTION_VALUES(hz_tick, "1000", "750", "600", "500", "300", "250", "100")
-GENERATE_CONST_OPTION_VALUES(tickless_mode, "full", "idle", "perodic")
-GENERATE_CONST_OPTION_VALUES(preempt_mode, "full", "voluntary", "server")
-GENERATE_CONST_OPTION_VALUES(lto_mode, "none", "full", "thin")
-GENERATE_CONST_OPTION_VALUES(hugepage_mode, "always", "madvise")
-GENERATE_CONST_OPTION_VALUES(cpu_opt_mode, "manual", "generic", "native_amd", "native_intel", "zen", "zen2", "zen3", "sandybridge", "ivybridge", "haswell", "icelake", "tigerlake", "alderlake")
+GENERATE_CONST_LOOKUP_OPTION_VALUES(hz_tick, "1000", "750", "600", "500", "300", "250", "100")
+GENERATE_CONST_LOOKUP_OPTION_VALUES(tickless_mode, "full", "idle", "perodic")
+GENERATE_CONST_LOOKUP_OPTION_VALUES(preempt_mode, "full", "voluntary", "server")
+GENERATE_CONST_LOOKUP_OPTION_VALUES(lto_mode, "none", "full", "thin")
+GENERATE_CONST_LOOKUP_OPTION_VALUES(hugepage_mode, "always", "madvise")
+GENERATE_CONST_LOOKUP_OPTION_VALUES(cpu_opt_mode, "manual", "generic", "native_amd", "native_intel", "zen", "zen2", "zen3", "sandybridge", "ivybridge", "haswell", "icelake", "tigerlake", "alderlake")
 
 // NOLINTEND(cppcoreguidelines-macro-usage)
 
@@ -146,6 +148,18 @@ constexpr auto get_kernel_name_path(std::string_view kernel_name) noexcept {
 
 inline bool checkstate_checked(QCheckBox* checkbox) noexcept {
     return (checkbox->checkState() == Qt::Checked);
+}
+
+inline void set_checkstate(QCheckBox* checkbox, bool is_checked) noexcept {
+    checkbox->setCheckState(is_checked ? Qt::Checked : Qt::Unchecked);
+}
+
+inline auto set_combobox_val(QComboBox* combobox, ssize_t index) noexcept {
+    if (index < 0) {
+        return 1;
+    }
+    combobox->setCurrentIndex(index);
+    return 0;
 }
 
 constexpr auto convert_to_varname(std::string_view option) noexcept {
@@ -436,6 +450,8 @@ ConfWindow::ConfWindow(QWidget* parent)
     // Connect buttons signal
     connect(options_page_ui_obj->cancel_button, &QPushButton::clicked, this, &ConfWindow::on_cancel);
     connect(options_page_ui_obj->ok_button, &QPushButton::clicked, this, &ConfWindow::on_execute);
+    connect(options_page_ui_obj->save_button, &QPushButton::clicked, this, &ConfWindow::on_save);
+    connect(options_page_ui_obj->load_button, &QPushButton::clicked, this, &ConfWindow::on_load);
     connect(options_page_ui_obj->main_combo_box, &QComboBox::currentIndexChanged, this, [this](std::int32_t) {
         reset_patches_data_tab();
     });
@@ -558,4 +574,107 @@ void ConfWindow::on_execute() noexcept {
 
     // Run our build command!
     run_cmd_async("makepkg -sicf --cleanbuild --skipchecksums", &m_running);
+}
+
+void ConfWindow::on_save() noexcept {
+    auto* options_page_ui_obj = m_ui->conf_options_page_widget->get_ui_obj();
+
+    ConfigOptions config_options{};
+
+    // checkboxes values (booleans)
+    config_options.hardly_check     = checkstate_checked(options_page_ui_obj->hardly_check);
+    config_options.per_gov_check    = checkstate_checked(options_page_ui_obj->perfgovern_check);
+    config_options.tcp_bbr3_check   = checkstate_checked(options_page_ui_obj->tcpbbr_check);
+    config_options.auto_optim_check = checkstate_checked(options_page_ui_obj->autooptim_check);
+
+    config_options.cachy_config_check        = checkstate_checked(options_page_ui_obj->cachyconfig_check);
+    config_options.nconfig_check             = checkstate_checked(options_page_ui_obj->nconfig_check);
+    config_options.menuconfig_check          = checkstate_checked(options_page_ui_obj->menuconfig_check);
+    config_options.xconfig_check             = checkstate_checked(options_page_ui_obj->xconfig_check);
+    config_options.gconfig_check             = checkstate_checked(options_page_ui_obj->gconfig_check);
+    config_options.localmodcfg_check         = checkstate_checked(options_page_ui_obj->localmodcfg_check);
+    config_options.numa_check                = checkstate_checked(options_page_ui_obj->numa_check);
+    config_options.damon_check               = checkstate_checked(options_page_ui_obj->damon_check);
+    config_options.builtin_zfs_check         = checkstate_checked(options_page_ui_obj->builtin_zfs_check);
+    config_options.builtin_nvidia_check      = checkstate_checked(options_page_ui_obj->builtin_nvidia_check);
+    config_options.builtin_nvidia_open_check = checkstate_checked(options_page_ui_obj->builtin_nvidia_open_check);
+    config_options.build_debug_check         = checkstate_checked(options_page_ui_obj->build_debug_check);
+
+    // combobox values (strings that we try to find on load)
+    config_options.hz_ticks_combo = get_hz_tick(static_cast<size_t>(options_page_ui_obj->hzticks_combo_box->currentIndex()));
+    config_options.tickrate_combo = get_tickless_mode(static_cast<size_t>(options_page_ui_obj->tickless_combo_box->currentIndex()));
+    config_options.preempt_combo  = get_preempt_mode(static_cast<size_t>(options_page_ui_obj->preempt_combo_box->currentIndex()));
+    config_options.hugepage_combo = get_hugepage_mode(static_cast<size_t>(options_page_ui_obj->hugepage_combo_box->currentIndex()));
+    config_options.lto_combo      = get_lto_mode(static_cast<size_t>(options_page_ui_obj->lto_combo_box->currentIndex()));
+    config_options.cpu_opt_combo  = get_cpu_opt_mode(static_cast<size_t>(options_page_ui_obj->processor_opt_combo_box->currentIndex()));
+
+    config_options.custom_name_edit = options_page_ui_obj->custom_name_edit->text().toStdString();
+
+    auto save_file_path = QFileDialog::getSaveFileName(
+        this,
+        tr("Save file as"),
+        QString::fromStdString(utils::fix_path("~/")),
+        tr("Config file (*.toml)"))
+                              .toStdString();
+    /* clang-format off */
+    if (save_file_path.empty()) { return; }
+    /* clang-format on */
+
+    if (!ConfigOptions::write_config_file(config_options, save_file_path)) {
+        QMessageBox::critical(this, "CachyOS Kernel Manager", tr("Failed to save config options to file: %1").arg(QString::fromStdString(save_file_path)));
+        return;
+    }
+}
+
+void ConfWindow::on_load() noexcept {
+    auto load_file_path = QFileDialog::getOpenFileName(
+        this,
+        tr("Load from"),
+        QString::fromStdString(utils::fix_path("~/")),
+        tr("Config file (*.toml)"))
+                              .toStdString();
+    /* clang-format off */
+    if (load_file_path.empty()) { return; }
+    /* clang-format on */
+
+    auto config_options = ConfigOptions::parse_from_file(load_file_path);
+    if (!config_options) {
+        QMessageBox::critical(this, "CachyOS Kernel Manager", tr("Failed to load config options from file: %1").arg(QString::fromStdString(load_file_path)));
+        return;
+    }
+
+    auto* options_page_ui_obj = m_ui->conf_options_page_widget->get_ui_obj();
+
+    // checkboxes values (booleans)
+    set_checkstate(options_page_ui_obj->hardly_check, config_options->hardly_check);
+    set_checkstate(options_page_ui_obj->perfgovern_check, config_options->per_gov_check);
+    set_checkstate(options_page_ui_obj->tcpbbr_check, config_options->tcp_bbr3_check);
+    set_checkstate(options_page_ui_obj->autooptim_check, config_options->auto_optim_check);
+
+    set_checkstate(options_page_ui_obj->cachyconfig_check, config_options->cachy_config_check);
+    set_checkstate(options_page_ui_obj->nconfig_check, config_options->nconfig_check);
+    set_checkstate(options_page_ui_obj->menuconfig_check, config_options->menuconfig_check);
+    set_checkstate(options_page_ui_obj->xconfig_check, config_options->xconfig_check);
+    set_checkstate(options_page_ui_obj->gconfig_check, config_options->gconfig_check);
+    set_checkstate(options_page_ui_obj->localmodcfg_check, config_options->localmodcfg_check);
+    set_checkstate(options_page_ui_obj->numa_check, config_options->numa_check);
+    set_checkstate(options_page_ui_obj->damon_check, config_options->damon_check);
+    set_checkstate(options_page_ui_obj->builtin_zfs_check, config_options->builtin_zfs_check);
+    set_checkstate(options_page_ui_obj->builtin_nvidia_check, config_options->builtin_nvidia_check);
+    set_checkstate(options_page_ui_obj->builtin_nvidia_open_check, config_options->builtin_nvidia_open_check);
+    set_checkstate(options_page_ui_obj->build_debug_check, config_options->build_debug_check);
+
+    // combobox values (strings that we try to find on load)
+    auto combobox_stat = set_combobox_val(options_page_ui_obj->hzticks_combo_box, lookup_hz_tick(config_options->hz_ticks_combo));
+    combobox_stat += set_combobox_val(options_page_ui_obj->tickless_combo_box, lookup_tickless_mode(config_options->tickrate_combo));
+    combobox_stat += set_combobox_val(options_page_ui_obj->preempt_combo_box, lookup_preempt_mode(config_options->preempt_combo));
+    combobox_stat += set_combobox_val(options_page_ui_obj->hugepage_combo_box, lookup_hugepage_mode(config_options->hugepage_combo));
+    combobox_stat += set_combobox_val(options_page_ui_obj->lto_combo_box, lookup_lto_mode(config_options->lto_combo));
+    combobox_stat += set_combobox_val(options_page_ui_obj->processor_opt_combo_box, lookup_cpu_opt_mode(config_options->cpu_opt_combo));
+
+    options_page_ui_obj->custom_name_edit->setText(QString::fromStdString(config_options->custom_name_edit));
+
+    if (combobox_stat != 0) {
+        QMessageBox::critical(this, "CachyOS Kernel Manager", tr("Config file(%1) is outdated").arg(QString::fromStdString(load_file_path)));
+    }
 }

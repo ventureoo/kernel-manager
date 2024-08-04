@@ -51,6 +51,12 @@ CPMAddPackage(
   GIT_TAG c241d64279d30a013be2601d42564280f950bcb8
   EXCLUDE_FROM_ALL YES
 )
+CPMAddPackage(
+  NAME Corrosion
+  GITHUB_REPOSITORY corrosion-rs/corrosion
+  GIT_TAG b45275c8b5ee16118008a6a140ce842557b3e47a
+  EXCLUDE_FROM_ALL YES
+)
 
 find_package(PolkitQt6-1 REQUIRED)
 
@@ -111,6 +117,7 @@ qt_add_executable(${PROJECT_NAME}
     src/aur_kernel.hpp src/aur_kernel.cpp
     src/km-window.hpp src/km-window.cpp
     "${CMAKE_BINARY_DIR}/compile_options.hpp"
+    src/config-options.hpp src/config-options.cpp
     src/conf-window.hpp src/conf-window.cpp
     src/schedext-window.hpp src/schedext-window.cpp
     src/conf-patches-page.hpp src/conf-patches-page.ui
@@ -132,7 +139,10 @@ enable_sanitizers(project_options)
 
 include_directories(${CMAKE_SOURCE_DIR}/src ${CMAKE_BINARY_DIR})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE project_warnings project_options Qt6::Widgets Qt6::Concurrent Threads::Threads fmt::fmt frozen::frozen PkgConfig::LIBALPM PkgConfig::LIBGLIB)
+corrosion_import_crate(MANIFEST_PATH "config-option-lib/Cargo.toml" FLAGS "${CARGO_FLAGS}")
+corrosion_add_cxxbridge(config-option-lib-cxxbridge CRATE config_option_lib MANIFEST_PATH "config-option-lib/Cargo.toml" FILES lib.rs)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE project_warnings project_options Qt6::Widgets Qt6::Concurrent Threads::Threads fmt::fmt frozen::frozen config-option-lib-cxxbridge PkgConfig::LIBALPM PkgConfig::LIBGLIB)
 
 option(ENABLE_UNITY "Enable Unity builds of projects" OFF)
 if(ENABLE_UNITY)
