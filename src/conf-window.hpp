@@ -39,12 +39,13 @@
 
 #include <ui_conf-window.h>
 
-#include <functional>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <QMainWindow>
+#include <QProcess>
 
 #if defined(__clang__)
 #pragma clang diagnostic pop
@@ -69,12 +70,16 @@ class ConfWindow final : public QMainWindow {
     void on_execute() noexcept;
     void on_save() noexcept;
     void on_load() noexcept;
+    void finished_proc(int exit_code, QProcess::ExitStatus exit_status) noexcept;
 
     bool m_running{};
+    QProcess m_cmd{};
+    std::string m_build_conf_path{};
     std::vector<std::string> m_previously_set_options{};
     std::unique_ptr<Ui::ConfWindow> m_ui = std::make_unique<Ui::ConfWindow>();
 
-    std::string get_all_set_values() const noexcept;
+    void run_cmd_async(std::string cmd, const std::string& working_path) noexcept;
+    auto get_all_set_values() const noexcept -> std::string;
     void clear_patches_data_tab() noexcept;
     void connect_all_checkboxes() noexcept;
 };

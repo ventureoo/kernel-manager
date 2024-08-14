@@ -42,8 +42,6 @@
 #pragma GCC diagnostic ignored "-Wconversion"
 #endif
 
-#include <glib.h>
-
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QLineEdit>
@@ -180,46 +178,6 @@ constexpr auto convert_to_var_assign_empty_wrapped(std::string_view option_name,
     return std::string{};
 }
 
-void child_watch_cb(GPid pid, [[maybe_unused]] gint status, gpointer user_data) noexcept {
-#if !defined(NDEBUG)
-    fmt::print(stderr, "Child {} exited {}\n", pid,
-        g_spawn_check_wait_status(status, nullptr) ? "normally" : "abnormally");
-#endif
-
-    // Free any resources associated with the child here, such as I/O channels
-    // on its stdout and stderr FDs. If you have no code to put in the
-    // child_watch_cb() callback, you can remove it and the g_child_watch_add()
-    // call, but you must also remove the G_SPAWN_DO_NOT_REAP_CHILD flag,
-    // otherwise the child process will stay around as a zombie until this
-    // process exits.
-    g_spawn_close_pid(pid);
-
-    auto* data = static_cast<bool*>(user_data);
-    *data      = false;
-}
-
-void run_cmd_async(std::string cmd, bool* data) noexcept {
-    cmd += "; read -p 'Press enter to exit'";
-    const gchar* const argv[] = {"/usr/lib/cachyos-kernel-manager/terminal-helper", cmd.c_str(), nullptr};
-    gint child_stdout{};
-    gint child_stderr{};
-    GPid child_pid{};
-    g_autoptr(GError) error = nullptr;
-
-    // Spawn child process.
-    // NOLINTNEXTLINE
-    g_spawn_async_with_pipes(nullptr, const_cast<gchar**>(argv), nullptr, G_SPAWN_DO_NOT_REAP_CHILD, nullptr,
-        nullptr, &child_pid, nullptr, &child_stdout,
-        &child_stderr, &error);
-    if (error != nullptr) {
-        fmt::print(stderr, "Spawning child failed: {}", error->message);
-        return;
-    }
-    // Add a child watch function which will be called when the child process
-    // exits.
-    g_child_watch_add(child_pid, child_watch_cb, data);
-}
-
 auto get_source_array_from_pkgbuild(std::string_view kernel_name_path, std::string_view options_set) noexcept {
     const auto& testscript_src  = fmt::format(FMT_COMPILE("#!/usr/bin/bash\n{}\nsource $1\n{}"), options_set, "echo \"${source[@]}\"");
     const auto& testscript_path = fmt::format(FMT_COMPILE("{}/.testscript"), kernel_name_path);
@@ -291,6 +249,38 @@ inline void list_widget_apply_edit_flag(QListWidget* list_widget) noexcept {
 }
 
 }  // namespace
+
+// NOTE: we use std::string const ref intentionally to prevent conversion from string_view into QString
+void ConfWindow::run_cmd_async(std::string cmd, const std::string& working_path) noexcept {
+    using namespace std::string_literals;
+    cmd += "; read -p 'Press enter to exit'"s;
+
+    // remember current build working directory
+    m_build_conf_path = working_path;
+
+    m_cmd.setProgram(QStringLiteral("/usr/lib/cachyos-kernel-manager/terminal-helper"));
+    m_cmd.setArguments({QString::fromStdString(cmd)});
+    m_cmd.setWorkingDirectory(QString::fromStdString(working_path));
+
+    m_cmd.start();
+
+    // connect finish callback
+    connect(&m_cmd, &QProcess::finished, this, &ConfWindow::finished_proc);
+}
+
+void ConfWindow::finished_proc(int exit_code, QProcess::ExitStatus) noexcept {
+    using namespace std::string_view_literals;
+    m_running = false;
+
+    // handle exit case
+    const auto& check_tmp_path = fmt::format(FMT_COMPILE("{}/.done-status"), m_build_conf_path);
+    if (fs::exists(check_tmp_path)) {
+        fmt::print("success\n");
+        // TODO(vnepogodin): here we need to handle artificts to install
+    } else {
+        fmt::print(stderr, "process failed with exit code: {}\n", exit_code);
+    }
+}
 
 void ConfWindow::connect_all_checkboxes() noexcept {
     auto* options_page_ui_obj = m_ui->conf_options_page_widget->get_ui_obj();
@@ -570,10 +560,11 @@ void ConfWindow::on_execute() noexcept {
         fmt::print(stderr, "Failed to set custom name in pkgbuild\n");
         return;
     }
-    fs::current_path(cpusched_path);
+    const auto& saved_working_path = fs::current_path().string();
+    const auto& build_working_path = fmt::format(FMT_COMPILE("{}/{}"), saved_working_path, cpusched_path);
 
     // Run our build command!
-    run_cmd_async("makepkg -sicf --cleanbuild --skipchecksums", &m_running);
+    run_cmd_async("makepkg -sicf --cleanbuild --skipchecksums && touch .done-status", build_working_path);
 }
 
 void ConfWindow::on_save() noexcept {
