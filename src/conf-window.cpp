@@ -24,7 +24,7 @@
 #include <cstdio>
 #include <cstdlib>
 
-#include <algorithm>    // for for_each
+#include <algorithm>    // for for_each, transform
 #include <filesystem>   // for permissions
 #include <ranges>       // for ranges::*
 #include <string_view>  // for string_view
@@ -156,7 +156,7 @@ inline auto set_combobox_val(QComboBox* combobox, ssize_t index) noexcept {
     if (index < 0) {
         return 1;
     }
-    combobox->setCurrentIndex(index);
+    combobox->setCurrentIndex(static_cast<std::int32_t>(index));
     return 0;
 }
 
@@ -539,7 +539,7 @@ ConfWindow::ConfWindow(QWidget* parent)
         /* clang-format on */
 
         // Prepend 'file://' to each selected patch file.
-        std::transform(files.cbegin(), files.cend(),
+        std::ranges::transform(files,
             files.begin(),  // write to the same location
             [](auto&& file_path) { return QString("file://") + std::forward<decltype(file_path)>(file_path); });
 

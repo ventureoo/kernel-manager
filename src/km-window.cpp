@@ -91,7 +91,7 @@ void init_kernels_tree_widget(QTreeWidget* tree_kernels, std::span<Kernel> kerne
         widget_item->setCheckState(TreeCol::Check, Qt::Unchecked);
         widget_item->setText(TreeCol::PkgName, kernel.get_raw());
         widget_item->setText(TreeCol::Version, kernel.version().c_str());
-        widget_item->setText(TreeCol::Category, kernel.category().data());
+        widget_item->setText(TreeCol::Category, QLatin1StringView(kernel.category().data(), kernel.category().size()));
         widget_item->setText(TreeCol::Displayed, QStringLiteral("true"));
         if (kernel.is_installed()) {
             const std::string_view kernel_installed_db = kernel.get_installed_db();

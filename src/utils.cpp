@@ -73,6 +73,7 @@ auto read_whole_file(std::string_view filepath) noexcept -> std::string {
     const std::size_t read = std::fread(buf.data(), sizeof(char), size, file);
     if (read != size) {
         fmt::print(stderr, "[READWHOLEFILE] '{}' read failed: {}\n", filepath, std::strerror(errno));
+        std::fclose(file);
         return {};
     }
     std::fclose(file);
@@ -182,9 +183,9 @@ void restore_clean_environment(std::vector<std::string>& previously_set_options,
     for (auto&& expr : set_values_list) {
         auto expr_split = utils::make_multiline(std::move(expr), '=');
         auto var_name   = expr_split[0];
-        auto var_val    = expr_split[1];
 
-        if (setenv(var_name.c_str(), var_val.c_str(), 1) != 0) {
+        const auto& var_val = expr_split[1];
+        if (::setenv(var_name.c_str(), var_val.c_str(), 1) != 0) {
             fmt::print(stderr, "Cannot set environment variable!: {}\n", std::strerror(errno));
             continue;
         }

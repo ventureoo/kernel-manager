@@ -167,28 +167,28 @@ void SchedExtWindow::on_apply() noexcept {
         return "restart"sv;
     }();
 
-    const auto is_flags_commented = []() -> bool {
+    static constexpr auto is_flags_commented = []() -> bool {
         using namespace std::string_view_literals;
         static constexpr auto scx_conf_path = "/etc/default/scx"sv;
         const auto& scx_conf_content        = utils::read_whole_file(scx_conf_path);
         return scx_conf_content.find("#SCX_FLAGS="sv) != std::string::npos;
     };
-    const auto get_scx_flags_sed = [](std::string_view sched_flags_text, bool flags_commented) -> std::string {
+    static constexpr auto get_scx_flags_sed = [](std::string_view sched_flags_text, bool flags_commented) -> std::string {
         using namespace std::string_literals;
         if (sched_flags_text.empty() && !flags_commented) {
             // comment out flags in scx
             return "-e 's/SCX_FLAGS=/#SCX_FLAGS=/'"s;
         } else if (!sched_flags_text.empty() && flags_commented) {
             // set flags in scx
-            return fmt::format("-e \"s/.*SCX_FLAGS=.*/SCX_FLAGS=\'{}\'/\"", sched_flags_text);
+            return fmt::format(R"(-e "s/.*SCX_FLAGS=.*/SCX_FLAGS='{}'/")", sched_flags_text);
         } else if (!sched_flags_text.empty() && !flags_commented) {
             // set flags in scx
-            return fmt::format("-e \"s/SCX_FLAGS=.*/SCX_FLAGS=\'{}\'/\"", sched_flags_text);
+            return fmt::format(R"(-e "s/SCX_FLAGS=.*/SCX_FLAGS='{}'/")", sched_flags_text);
         }
         return ""s;
     };
 
-    bool flags_commented = is_flags_commented();
+    const bool flags_commented = is_flags_commented();
 
     // TODO(vnepogodin): refactor that
     const auto& sched_flags_text = m_ui->schedext_flags_edit->text().trimmed().toStdString();
