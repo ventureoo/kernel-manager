@@ -257,8 +257,10 @@ bool insert_new_source_array_into_pkgbuild(std::string_view kernel_name_path, QL
         return !rng_str.ends_with(".patch");
     };
 
-    std::vector<std::string> array_entries{};
-    std::ranges::for_each(orig_source_array | std::ranges::views::filter(functor), [&](auto&& rng) { array_entries.emplace_back(fmt::format(FMT_COMPILE("\"{}\""), rng)); });
+    auto array_entries = orig_source_array
+        | std::ranges::views::filter(functor)
+        | std::ranges::views::transform([](auto&& rng) { return fmt::format(FMT_COMPILE("\"{}\""), rng); })
+        | std::ranges::to<std::vector<std::string>>();
 
     // Apply flag to each item in list widget
     for (int i = 0; i < list_widget->count(); ++i) {
