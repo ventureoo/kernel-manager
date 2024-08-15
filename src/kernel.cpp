@@ -42,11 +42,11 @@ static const bool is_root_on_zfs = utils::exec("findmnt -ln -o FSTYPE /") == "zf
 
 // NOLINTNEXTLINE
 static const bool is_nvidia_card_prebuild_module = [] {
-    const auto& profile_names = utils::exec("chwd --list-installed -d | grep Name | awk '{print $4}'");
+    const auto& profile_names = utils::exec("chwd --list-installed -d 2>/dev/null | grep Name | awk '{print $4}'");
     return std::ranges::any_of(utils::make_split_view(profile_names, '\n'), [](auto&& profile_name) { return profile_name.starts_with("nvidia-dkms"); });
 }();
 static const bool is_nvidia_card_prebuild_open_module = [] {
-    const auto& profile_names = utils::exec("chwd --list-installed -d | grep Name | awk '{print $4}'");
+    const auto& profile_names = utils::exec("chwd --list-installed -d 2>/dev/null | grep Name | awk '{print $4}'");
     return std::ranges::any_of(utils::make_split_view(profile_names, '\n'), [](auto&& profile_name) { return profile_name.starts_with("nvidia-open-dkms"); });
 }();
 
