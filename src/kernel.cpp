@@ -108,9 +108,25 @@ bool Kernel::install() const noexcept {
     }();
     const bool dkms_modules_not_installed = (!is_nvidia_dkms_installed && !is_nvidia_open_dkms_installed);
 
-    if (dkms_modules_not_installed && is_nvidia_card_prebuild_open_module && m_nvidia_open_module != nullptr) {
+    // if we have any of the modules already installed,
+    // then just use whatever is installed. skipping chwd detection
+    const bool is_nvidia_modules_installed      = utils::exec("pacman -Qqs '^linux-cachyos' 2>/dev/null | grep -q '\\-nvidia$'; echo $?") == "0";
+    const bool is_nvidia_open_modules_installed = utils::exec("pacman -Qqs '^linux-cachyos' 2>/dev/null | grep -q '\\-nvidia-open$'; echo $?") == "0";
+
+    bool should_install_nvidia      = (is_nvidia_card_prebuild_module && m_nvidia_module != nullptr);
+    bool should_install_nvidia_open = (is_nvidia_card_prebuild_open_module && m_nvidia_open_module != nullptr);
+
+    if (is_nvidia_open_modules_installed) {
+        should_install_nvidia_open = true;
+        should_install_nvidia      = false;
+    } else if (is_nvidia_modules_installed) {
+        should_install_nvidia_open = false;
+        should_install_nvidia      = true;
+    }
+
+    if (dkms_modules_not_installed && should_install_nvidia_open) {
         g_kernel_install_list.emplace_back(alpm_pkg_get_name(m_nvidia_open_module));
-    } else if (dkms_modules_not_installed && is_nvidia_card_prebuild_module && m_nvidia_module != nullptr) {
+    } else if (dkms_modules_not_installed && should_install_nvidia) {
         g_kernel_install_list.emplace_back(alpm_pkg_get_name(m_nvidia_module));
     }
     g_kernel_install_list.insert(g_kernel_install_list.end(), {pkg_name, pkg_headers});
