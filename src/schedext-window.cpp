@@ -55,7 +55,7 @@ auto read_kernel_file(std::string_view file_path) noexcept -> std::string {
     std::string file_content{};
 
     // Skip if failed to open file descriptor.
-    std::ifstream file_stream{file_path.data()};
+    std::ifstream file_stream{std::string{file_path}};
     if (!file_stream.is_open()) {
         return {};
     }

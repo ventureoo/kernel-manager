@@ -82,7 +82,7 @@ auto read_whole_file(std::string_view filepath) noexcept -> std::string {
 }
 
 bool write_to_file(std::string_view filepath, std::string_view data) noexcept {
-    std::ofstream file{filepath.data()};
+    std::ofstream file{std::string{filepath}};
     if (!file.is_open()) {
         fmt::print(stderr, "[WRITE_TO_FILE] '{}' open failed: {}\n", filepath, std::strerror(errno));
         return false;
