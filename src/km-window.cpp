@@ -87,11 +87,17 @@ bool is_kernels_change_state(alpm_handle_t* handle, std::span<std::string_view> 
 
 void init_kernels_tree_widget(QTreeWidget* tree_kernels, std::span<Kernel> kernels) noexcept {
     for (auto& kernel : kernels) {
+        auto kernel_version  = kernel.version();
+        auto kernel_category = kernel.category();
+
+        auto version_view  = QLatin1StringView(kernel_version.data(), static_cast<qsizetype>(kernel_version.size()));
+        auto category_view = QLatin1StringView(kernel_category.data(), static_cast<qsizetype>(kernel_category.size()));
+
         auto* widget_item = new QTreeWidgetItem(tree_kernels);
         widget_item->setCheckState(TreeCol::Check, Qt::Unchecked);
         widget_item->setText(TreeCol::PkgName, kernel.get_raw());
-        widget_item->setText(TreeCol::Version, kernel.version().c_str());
-        widget_item->setText(TreeCol::Category, QLatin1StringView(kernel.category().data(), kernel.category().size()));
+        widget_item->setText(TreeCol::Version, version_view);
+        widget_item->setText(TreeCol::Category, category_view);
         widget_item->setText(TreeCol::Displayed, QStringLiteral("true"));
         if (kernel.is_installed()) {
             const std::string_view kernel_installed_db = kernel.get_installed_db();
