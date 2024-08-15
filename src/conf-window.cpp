@@ -179,7 +179,7 @@ constexpr auto convert_to_var_assign_empty_wrapped(std::string_view option_name,
 }
 
 auto get_source_array_from_pkgbuild(std::string_view kernel_name_path, std::string_view options_set) noexcept {
-    const auto& testscript_src  = fmt::format(FMT_COMPILE("#!/usr/bin/bash\n{}\nsource $1\n{}"), options_set, "echo \"${source[@]}\"");
+    const auto& testscript_src  = fmt::format(FMT_COMPILE("#!/usr/bin/bash\n{}\nsource \"$1\"\n{}"), options_set, "echo \"${source[@]}\"");
     const auto& testscript_path = fmt::format(FMT_COMPILE("{}/.testscript"), kernel_name_path);
 
     if (utils::write_to_file(testscript_path, testscript_src)) {
@@ -190,6 +190,65 @@ auto get_source_array_from_pkgbuild(std::string_view kernel_name_path, std::stri
 
     const auto& src_entries = utils::exec(fmt::format(FMT_COMPILE("{} {}/PKGBUILD"), testscript_path, kernel_name_path));
     return utils::make_multiline(src_entries, ' ');
+}
+
+auto prepare_func_names(std::vector<std::string> parse_lines, std::string_view pkgver_str) noexcept -> std::vector<std::string> {
+    using namespace std::string_view_literals;
+
+    static constexpr auto functor = [](auto&& rng) {
+        auto rng_str = std::string_view(&*rng.begin(), static_cast<size_t>(std::ranges::distance(rng)));
+        return rng_str.starts_with("package_"sv);
+    };
+
+    std::vector<std::string> pkg_globs{};
+    pkg_globs = parse_lines
+        | std::ranges::views::transform([&](auto&& rng) {
+              auto&& line = std::string_view(&*rng.begin(), static_cast<size_t>(std::ranges::distance(rng)));
+
+              static constexpr auto needle_prefix = "declare -f "sv;
+              if (line.starts_with(needle_prefix)) {
+                  line.remove_prefix(needle_prefix.size());
+              }
+              return line;
+          })
+        | std::ranges::views::filter(functor)
+        | std::ranges::views::transform([&](auto&& rng) {
+              auto&& line = std::string_view(&*rng.begin(), static_cast<size_t>(std::ranges::distance(rng)));
+
+              static constexpr auto needle_prefix = "package_"sv;
+              if (line.starts_with(needle_prefix)) {
+                  line.remove_prefix(needle_prefix.size());
+              }
+              return fmt::format(FMT_COMPILE("{}-{}-*.pkg.tar.zst"), line, pkgver_str);
+          })
+        | std::ranges::to<std::vector<std::string>>();
+    return pkg_globs;
+}
+
+auto get_package_names_glob_from_pkgbuild(std::string_view kernel_name_path) noexcept -> std::vector<std::string> {
+    using namespace std::string_view_literals;
+    static constexpr auto testscript_src = "#!/usr/bin/bash\nsource \"$1\"\ndeclare -F;echo \"pkgver: $pkgver-$pkgrel\""sv;
+    static constexpr auto pkgver_prefix  = "pkgver: "sv;
+
+    const auto& testscript_path = fmt::format(FMT_COMPILE("{}/.testscriptpkgnames"), kernel_name_path);
+    if (utils::write_to_file(testscript_path, testscript_src)) {
+        fs::permissions(testscript_path,
+            fs::perms::owner_exec | fs::perms::group_exec | fs::perms::others_exec,
+            fs::perm_options::add);
+    }
+
+    const auto& src_entries = utils::exec(fmt::format(FMT_COMPILE("{} {}/PKGBUILD"), testscript_path, kernel_name_path));
+    const auto& parse_lines = utils::make_multiline(src_entries, '\n');
+
+    auto it = std::ranges::find_if(parse_lines, [](auto&& line) { return line.starts_with(pkgver_prefix); });
+    if (it == std::ranges::end(parse_lines)) {
+        fmt::print(stderr, "broken pkgbuild; pkgver must be present\n");
+        return {};
+    }
+    auto pkgver_str = std::string_view{*it};
+    pkgver_str.remove_prefix(pkgver_prefix.size());
+
+    return prepare_func_names(parse_lines, pkgver_str);
 }
 
 bool insert_new_source_array_into_pkgbuild(std::string_view kernel_name_path, QListWidget* list_widget, const std::vector<std::string>& orig_source_array) noexcept {
@@ -265,18 +324,33 @@ void ConfWindow::run_cmd_async(std::string cmd, const std::string& working_path)
     m_cmd.start();
 
     // connect finish callback
-    connect(&m_cmd, &QProcess::finished, this, &ConfWindow::finished_proc);
+    connect(&m_cmd, &QProcess::finished, this, &ConfWindow::finished_proc, Qt::UniqueConnection);
 }
 
 void ConfWindow::finished_proc(int exit_code, QProcess::ExitStatus) noexcept {
     using namespace std::string_view_literals;
+
     m_running = false;
 
     // handle exit case
     const auto& check_tmp_path = fmt::format(FMT_COMPILE("{}/.done-status"), m_build_conf_path);
     if (fs::exists(check_tmp_path)) {
+        fs::remove(check_tmp_path);
+
         fmt::print("success\n");
-        // TODO(vnepogodin): here we need to handle artificts to install
+
+        auto res = QMessageBox::question(this, "CachyOS Kernel Manager", tr("Do you want to install build packages?"));
+        if (res == QMessageBox::Yes) {
+            fmt::print("pressed yes\n");
+
+            auto pkg_glob_list = get_package_names_glob_from_pkgbuild(m_build_conf_path);
+            auto pkg_globs     = pkg_glob_list | std::ranges::views::join_with(' ') | std::ranges::to<std::string>();
+            auto pacman_cmd    = fmt::format(FMT_COMPILE("sudo pacman -U {}"), pkg_globs);
+
+            fmt::print("pacman_cmd := {}\n", pacman_cmd);
+            m_running = true;
+            run_cmd_async(pacman_cmd, m_build_conf_path);
+        }
     } else {
         fmt::print(stderr, "process failed with exit code: {}\n", exit_code);
     }
@@ -564,7 +638,7 @@ void ConfWindow::on_execute() noexcept {
     const auto& build_working_path = fmt::format(FMT_COMPILE("{}/{}"), saved_working_path, cpusched_path);
 
     // Run our build command!
-    run_cmd_async("makepkg -sicf --cleanbuild --skipchecksums && touch .done-status", build_working_path);
+    run_cmd_async("makepkg -scf --cleanbuild --skipchecksums && touch .done-status", build_working_path);
 }
 
 void ConfWindow::on_save() noexcept {
