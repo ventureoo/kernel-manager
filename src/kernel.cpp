@@ -42,8 +42,12 @@ static const bool is_root_on_zfs = utils::exec("findmnt -ln -o FSTYPE /") == "zf
 
 // NOLINTNEXTLINE
 static const bool is_nvidia_card_prebuild_module = [] {
-    const auto& profile_names = utils::exec("chwd --list -d | grep Name | awk '{print $4}'");
-    return std::ranges::any_of(utils::make_split_view(profile_names, '\n'), [](auto&& profile_name) { return profile_name == "nvidia-dkms" || profile_name == "nvidia-dkms.40xxcards"; });
+    const auto& profile_names = utils::exec("chwd --list-installed -d | grep Name | awk '{print $4}'");
+    return std::ranges::any_of(utils::make_split_view(profile_names, '\n'), [](auto&& profile_name) { return profile_name.starts_with("nvidia-dkms"); });
+}();
+static const bool is_nvidia_card_prebuild_open_module = [] {
+    const auto& profile_names = utils::exec("chwd --list-installed -d | grep Name | awk '{print $4}'");
+    return std::ranges::any_of(utils::make_split_view(profile_names, '\n'), [](auto&& profile_name) { return profile_name.starts_with("nvidia-open-dkms"); });
 }();
 
 }  // namespace
@@ -98,7 +102,15 @@ bool Kernel::install() const noexcept {
         static constexpr std::string_view NVIDIA_DKMS_PKG = "nvidia-dkms";
         return alpm_db_get_pkg(alpm_get_localdb(handle), NVIDIA_DKMS_PKG.data()) != nullptr;
     }();
-    if (!is_nvidia_dkms_installed && is_nvidia_card_prebuild_module && m_nvidia_module != nullptr) {
+    const bool is_nvidia_open_dkms_installed = [handle = m_handle] {
+        static constexpr std::string_view NVIDIA_OPEN_DKMS_PKG = "nvidia-open-dkms";
+        return alpm_db_get_pkg(alpm_get_localdb(handle), NVIDIA_OPEN_DKMS_PKG.data()) != nullptr;
+    }();
+    const bool dkms_modules_not_installed = (!is_nvidia_dkms_installed && !is_nvidia_open_dkms_installed);
+
+    if (dkms_modules_not_installed && is_nvidia_card_prebuild_open_module && m_nvidia_open_module != nullptr) {
+        g_kernel_install_list.emplace_back(alpm_pkg_get_name(m_nvidia_open_module));
+    } else if (dkms_modules_not_installed && is_nvidia_card_prebuild_module && m_nvidia_module != nullptr) {
         g_kernel_install_list.emplace_back(alpm_pkg_get_name(m_nvidia_module));
     }
     g_kernel_install_list.insert(g_kernel_install_list.end(), {pkg_name, pkg_headers});
@@ -129,6 +141,7 @@ bool Kernel::remove() const noexcept {
     append_to_removal_list(m_headers);
     append_to_removal_list(m_zfs_module);
     append_to_removal_list(m_nvidia_module);
+    append_to_removal_list(m_nvidia_open_module);
     return true;
 }
 
@@ -199,6 +212,9 @@ std::vector<Kernel> Kernel::get_kernels(alpm_handle_t* handle) noexcept {
 
                 const auto& nvidia_pkgname = fmt::format(FMT_COMPILE("{}-nvidia"), pkg_name);
                 kernel_obj.m_nvidia_module = alpm_db_get_pkg(db, nvidia_pkgname.c_str());
+
+                const auto& nvidia_open_pkgname = fmt::format(FMT_COMPILE("{}-nvidia-open"), pkg_name);
+                kernel_obj.m_nvidia_open_module = alpm_db_get_pkg(db, nvidia_open_pkgname.c_str());
             }
 
             kernels.emplace_back(std::move(kernel_obj));
