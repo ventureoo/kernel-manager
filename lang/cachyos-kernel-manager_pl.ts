@@ -71,12 +71,12 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="646"/>
         <source>Build the open NVIDIA module</source>
-        <translation type="unfinished"></translation>
+        <translation>Zbuduj otwartoźródłowy moduł NVIDIA</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="741"/>
         <source>Build kernel</source>
-        <translation type="unfinished"></translation>
+        <translation>Skompiluj kernel</translation>
     </message>
     <message>
         <source>Enable multigenerational LRU</source>
@@ -114,7 +114,7 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="675"/>
         <source>Include vmlinux with debug informations/symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Dołącz vmlinux z informacjami/symbolami debugowania</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="443"/>
@@ -133,7 +133,7 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="33"/>
         <source>Custom package name</source>
-        <translation type="unfinished"></translation>
+        <translation>Niestandardowa nazwa paczki</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="53"/>
@@ -143,7 +143,7 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="617"/>
         <source>Build the NVIDIA module</source>
-        <translation type="unfinished"></translation>
+        <translation>Zbuduj moduł NVIDIA</translation>
     </message>
 </context>
 <context>
@@ -311,23 +311,26 @@ Please check your internet connection and try again</source>
         <source>Please wait...
 We are preparing configuration window for you
 cloning PKGBUILDs..</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę czekać...
+Przygotowujemy okno konfiguracji dla Ciebie
+klonowanie PKGBUILDs..</translation>
     </message>
     <message>
         <location filename="../src/km-window.cpp" line="143"/>
         <source>Failed to initialize alpm handle (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się zainicjować obsługi alpm (%1)</translation>
     </message>
     <message>
         <location filename="../src/km-window.cpp" line="156"/>
         <source>Failed to release alpm handle (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się zwolnić obsługi alpm (%1)</translation>
     </message>
     <message>
         <location filename="../src/km-window.cpp" line="361"/>
         <source>Please wait...
 Initializing kernels..</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę czekać...
+Inicjalizacja kernela..</translation>
     </message>
     <message>
         <location filename="../src/km-window.ui" line="28"/>
@@ -338,7 +341,13 @@ Initializing kernels..</source>
 &lt;p&gt;This app won&apos;t work if you are already running a pacman instance.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;
+&lt;body&gt;
+&lt;p&gt;Tutaj zobaczysz informacje o aktualnie zainstalowanych i dostępnych jądrach Linuksa.&lt;/p&gt;
+&lt;p&gt;Pakiety jądra można instalować/odinstalowywać za pomocą pól wyboru w lewej kolumnie.&lt;/p&gt;
+&lt;p&gt;Aplikacja ta nie będzie działać, jeśli masz już uruchomioną instancję pacman.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
