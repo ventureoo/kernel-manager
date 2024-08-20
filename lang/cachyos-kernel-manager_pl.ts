@@ -174,7 +174,7 @@
     <message>
         <location filename="../src/conf-window.ui" line="45"/>
         <source>Patches</source>
-        <translation>Patches</translation>
+        <translation>Łatki</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="377"/>
