@@ -74,7 +74,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="741"/>
+        <location filename="../src/conf-options-page.ui" line="721"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/conf-options-page.ui" line="728"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/conf-options-page.ui" line="755"/>
         <source>Build kernel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -122,7 +132,7 @@
         <translation>Transparente Hugepages</translation>
     </message>
     <message>
-        <location filename="../src/conf-options-page.ui" line="734"/>
+        <location filename="../src/conf-options-page.ui" line="748"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -177,52 +187,88 @@
         <translation>Patches</translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="377"/>
+        <location filename="../src/conf-window.cpp" line="457"/>
         <source>Bore - Burst-Oriented Response Enhancer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="378"/>
+        <location filename="../src/conf-window.cpp" line="458"/>
         <source>RC - Release Candidate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="454"/>
+        <location filename="../src/conf-window.cpp" line="536"/>
         <source>Select one or more patch files</source>
         <translation>Wählen Sie eine oder mehrere Patch-Dateien</translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="456"/>
+        <location filename="../src/conf-window.cpp" line="538"/>
         <source>Patch file (*.patch)</source>
         <translation>Patch-Datei (*.patch)</translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="476"/>
+        <location filename="../src/conf-window.cpp" line="558"/>
         <source>Enter URL patch</source>
         <translation>URL-Patch eingeben</translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="477"/>
+        <location filename="../src/conf-window.cpp" line="559"/>
         <source>Patch URL:</source>
         <translation>Patch URL:</translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="379"/>
+        <location filename="../src/conf-window.cpp" line="682"/>
+        <source>Save file as</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/conf-window.cpp" line="684"/>
+        <location filename="../src/conf-window.cpp" line="701"/>
+        <source>Config file (*.toml)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/conf-window.cpp" line="691"/>
+        <source>Failed to save config options to file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/conf-window.cpp" line="699"/>
+        <source>Load from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/conf-window.cpp" line="709"/>
+        <source>Failed to load config options from file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/conf-window.cpp" line="745"/>
+        <source>Config file(%1) is outdated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/conf-window.cpp" line="459"/>
         <source>RT - Realtime kernel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="380"/>
+        <location filename="../src/conf-window.cpp" line="344"/>
+        <source>Do you want to install build packages?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/conf-window.cpp" line="460"/>
         <source>RT-Bore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="381"/>
+        <location filename="../src/conf-window.cpp" line="461"/>
         <source>Sched-Ext - BPF extensible scheduler class</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/conf-window.cpp" line="376"/>
+        <location filename="../src/conf-window.cpp" line="456"/>
         <source>CachyOS - BORE + SCHED-EXT</source>
         <translation type="unfinished"></translation>
     </message>
@@ -344,27 +390,37 @@ Initializing kernels..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/schedext-window.ui" line="88"/>
+        <location filename="../src/schedext-window.ui" line="82"/>
         <source> Select sched-ext scheduler:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/schedext-window.ui" line="98"/>
+        <location filename="../src/schedext-window.ui" line="92"/>
+        <source> Select scheduler profile:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/schedext-window.ui" line="115"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/schedext-window.ui" line="105"/>
+        <location filename="../src/schedext-window.ui" line="75"/>
         <source>Running sched-ext scheduler:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/schedext-window.ui" line="156"/>
+        <location filename="../src/schedext-window.ui" line="122"/>
+        <source>Set sched-ext extra scheduler flags:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/schedext-window.ui" line="176"/>
         <source>Disable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/schedext-window.ui" line="163"/>
+        <location filename="../src/schedext-window.ui" line="183"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
