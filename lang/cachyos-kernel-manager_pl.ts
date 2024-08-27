@@ -410,13 +410,13 @@ Inicjalizacja kernela..</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="82"/>
-        <source> Select sched-ext scheduler:</source>
-        <translation> Wybierz planistę sched-ext:</translation>
+        <source>Select sched-ext scheduler:</source>
+        <translation>Wybierz planistę sched-ext:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="92"/>
-        <source> Select scheduler profile:</source>
-        <translation> Wybierz profle planisty:</translation>
+        <source>Select scheduler profile:</source>
+        <translation>Wybierz profle planisty:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="115"/>
