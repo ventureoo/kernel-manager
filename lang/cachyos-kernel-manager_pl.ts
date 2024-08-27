@@ -148,7 +148,7 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="53"/>
         <source>$pkgbase</source>
-        <translation type="unfinished"></translation>
+        <translation>$pkgbase</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="617"/>
@@ -260,17 +260,17 @@
     <message>
         <location filename="../src/conf-window.cpp" line="460"/>
         <source>RT-Bore</source>
-        <translation type="unfinished"></translation>
+        <translation>RT-Bore</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="461"/>
         <source>Sched-Ext - BPF extensible scheduler class</source>
-        <translation type="unfinished"></translation>
+        <translation>Sched-Ext - BPF extensible scheduler class</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="456"/>
         <source>CachyOS - BORE + SCHED-EXT</source>
-        <translation type="unfinished"></translation>
+        <translation>CachyOS - BORE + SCHED-EXT</translation>
     </message>
 </context>
 <context>
@@ -416,7 +416,7 @@ Inicjalizacja kernela..</translation>
     <message>
         <location filename="../src/schedext-window.ui" line="92"/>
         <source> Select scheduler profile:</source>
-        <translation>Wybierz profle planisty</translation>
+        <translation> Wybierz profle planisty:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="115"/>
@@ -431,7 +431,7 @@ Inicjalizacja kernela..</translation>
     <message>
         <location filename="../src/schedext-window.ui" line="122"/>
         <source>Set sched-ext extra scheduler flags:</source>
-        <translation>Ustaw dodatkowe flagi planisty</translation>
+        <translation>Ustaw dodatkowe flagi planisty:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="176"/>
