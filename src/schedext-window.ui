@@ -79,7 +79,7 @@
       <item row="1" column="1">
        <widget class="QLabel" name="scheduler_select_label">
         <property name="text">
-         <string> Select sched-ext scheduler:</string>
+         <string>Select sched-ext scheduler:</string>
         </property>
        </widget>
       </item>
@@ -89,7 +89,7 @@
       <item row="2" column="1">
        <widget class="QLabel" name="scheduler_profile_select_label">
         <property name="text">
-         <string> Select scheduler profile:</string>
+         <string>Select scheduler profile:</string>
         </property>
        </widget>
       </item>
