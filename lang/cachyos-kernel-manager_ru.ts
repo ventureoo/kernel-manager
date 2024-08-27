@@ -81,17 +81,17 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="646"/>
         <source>Build the open NVIDIA module</source>
-        <translation type="unfinished"></translation>
+        <translation>Собрать модуль NVIDIA-open</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="721"/>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="728"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="755"/>
@@ -209,7 +209,7 @@
     <message>
         <location filename="../src/conf-window.cpp" line="344"/>
         <source>Do you want to install build packages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы хотите установить собранные пакеты?</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="460"/>
@@ -244,33 +244,33 @@
     <message>
         <location filename="../src/conf-window.cpp" line="682"/>
         <source>Save file as</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить файл как</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="684"/>
         <location filename="../src/conf-window.cpp" line="701"/>
         <source>Config file (*.toml)</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфиг файл (*.toml)</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="691"/>
         <source>Failed to save config options to file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось сохранить параметры конфигурации в файл: %1</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="699"/>
         <source>Load from</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить из</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="709"/>
         <source>Failed to load config options from file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось загрузить параметры конфигурации из файла: %1</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="745"/>
         <source>Config file(%1) is outdated</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфигурационный файл(%1) устарел</translation>
     </message>
 </context>
 <context>
@@ -396,12 +396,12 @@ cloning PKGBUILDs..</source>
     <message>
         <location filename="../src/schedext-window.ui" line="82"/>
         <source>Select sched-ext scheduler:</source>
-        <translation> Выберите sched-ext планировщик:</translation>
+        <translation>Выберите sched-ext планировщик:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="92"/>
         <source>Select scheduler profile:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите профиль планировщика:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="115"/>
@@ -416,7 +416,7 @@ cloning PKGBUILDs..</source>
     <message>
         <location filename="../src/schedext-window.ui" line="122"/>
         <source>Set sched-ext extra scheduler flags:</source>
-        <translation type="unfinished"></translation>
+        <translation>Установите доп. флаги для sched-ext планировщика:</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="176"/>
