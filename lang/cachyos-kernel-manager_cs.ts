@@ -411,12 +411,12 @@ Inicializáce jader..</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="82"/>
-        <source> Select sched-ext scheduler:</source>
+        <source>Select sched-ext scheduler:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="92"/>
-        <source> Select scheduler profile:</source>
+        <source>Select scheduler profile:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
