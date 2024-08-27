@@ -76,12 +76,12 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="721"/>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Załaduj</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="728"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="755"/>
@@ -219,33 +219,33 @@
     <message>
         <location filename="../src/conf-window.cpp" line="682"/>
         <source>Save file as</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz plik jako</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="684"/>
         <location filename="../src/conf-window.cpp" line="701"/>
         <source>Config file (*.toml)</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik konfiguracyjny (*.toml)</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="691"/>
         <source>Failed to save config options to file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się zapisać opcji konfiguracji do pliku: %1</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="699"/>
         <source>Load from</source>
-        <translation type="unfinished"></translation>
+        <translation>Załaduj z</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="709"/>
         <source>Failed to load config options from file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie udało się załadować opcji konfiguracji z pliku: %1</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="745"/>
         <source>Config file(%1) is outdated</source>
-        <translation type="unfinished"></translation>
+        <translation>Plik konfiguracyjny(%1) jest nieaktualny</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="459"/>
@@ -255,7 +255,7 @@
     <message>
         <location filename="../src/conf-window.cpp" line="344"/>
         <source>Do you want to install build packages?</source>
-        <translation type="unfinished"></translation>
+        <translation>Czy chcesz zainstalować zbudowane pakiety?</translation>
     </message>
     <message>
         <location filename="../src/conf-window.cpp" line="460"/>
@@ -416,7 +416,7 @@ Inicjalizacja kernela..</translation>
     <message>
         <location filename="../src/schedext-window.ui" line="92"/>
         <source> Select scheduler profile:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz profle planisty</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="115"/>
@@ -431,7 +431,7 @@ Inicjalizacja kernela..</translation>
     <message>
         <location filename="../src/schedext-window.ui" line="122"/>
         <source>Set sched-ext extra scheduler flags:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw dodatkowe flagi planisty</translation>
     </message>
     <message>
         <location filename="../src/schedext-window.ui" line="176"/>
