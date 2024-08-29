@@ -92,6 +92,61 @@ auto is_scx_service_active() noexcept -> bool {
     using namespace std::string_view_literals;
     return utils::exec("systemctl is-active scx"sv) == "active"sv;
 }
+
+enum class SchedMode : std::uint8_t {
+    /// Default values for the scheduler
+    Auto = 0,
+    /// Applies flags for better gaming experience
+    Gaming = 1,
+    /// Applies flags for lower power usage
+    PowerSave = 2,
+    /// Starts scheduler in low latency mode
+    LowLatency = 3,
+};
+
+constexpr auto get_scx_mode_from_str(std::string_view scx_mode) noexcept -> SchedMode {
+    using namespace std::string_view_literals;
+
+    if (scx_mode == "gaming"sv) {
+        return SchedMode::Gaming;
+    } else if (scx_mode == "lowlatency"sv) {
+        return SchedMode::LowLatency;
+    } else if (scx_mode == "powersave"sv) {
+        return SchedMode::PowerSave;
+    }
+    return SchedMode::Auto;
+}
+
+constexpr auto get_scx_flags(std::string_view scx_sched, SchedMode scx_mode) noexcept -> std::string_view {
+    using namespace std::string_view_literals;
+
+    // Map the selected performance profile to the different scheduler
+    // options.
+    //
+    // NOTE: only scx_bpfland and scx_lavd are supported for now.
+    if (scx_mode == SchedMode::Auto) {
+    } else if (scx_mode == SchedMode::Gaming) {
+        if (scx_sched == "scx_bpfland"sv) {
+            return "-c 0 -k -m performance"sv;
+        } else if (scx_sched == "scx_lavd"sv) {
+            return "--performance"sv;
+        }
+    } else if (scx_mode == SchedMode::LowLatency) {
+        if (scx_sched == "scx_bpfland"sv) {
+            return "--lowlatency"sv;
+        } else if (scx_sched == "scx_lavd"sv) {
+            return "--performance"sv;
+        }
+    } else if (scx_mode == SchedMode::PowerSave) {
+        if (scx_sched == "scx_bpfland"sv) {
+            return "-m powersave"sv;
+        } else if (scx_sched == "scx_lavd"sv) {
+            return "--powersave"sv;
+        }
+    }
+
+    return {};
+}
 }  // namespace
 
 SchedExtWindow::SchedExtWindow(QWidget* parent)
@@ -199,34 +254,9 @@ void SchedExtWindow::on_apply() noexcept {
     }();
 
     static constexpr auto get_scx_flags_sed = [](std::string_view scx_sched,
-                                                  std::string_view scx_profile,
+                                                  SchedMode scx_mode,
                                                   std::string_view scx_extra_flags) -> std::string {
-        using namespace std::string_view_literals;
-
-        std::string_view scx_base_flags;
-
-        // Map the selected performance profile to the different scheduler
-        // options.
-        //
-        // NOTE: only scx_bpfland and scx_lavd are supported for now.
-        if (scx_profile == "default"sv) {
-        } else if (scx_profile == "gaming"sv) {
-            if (scx_sched == "scx_bpfland"sv)
-                scx_base_flags = "-c 0 -k -m performance"sv;
-            else if (scx_sched == "scx_lavd"sv)
-                scx_base_flags = "--performance"sv;
-        } else if (scx_profile == "lowlatency"sv) {
-            if (scx_sched == "scx_bpfland"sv)
-                scx_base_flags = "--lowlatency"sv;
-            else if (scx_sched == "scx_lavd"sv)
-                scx_base_flags = "--performance"sv;
-        } else if (scx_profile == "powersave"sv) {
-            if (scx_sched == "scx_bpfland"sv)
-                scx_base_flags = "-m powersave"sv;
-            else if (scx_sched == "scx_lavd"sv)
-                scx_base_flags = "--powersave"sv;
-        }
-
+        const auto scx_base_flags = get_scx_flags(scx_sched, scx_mode);
         return fmt::format(R"(-e 's/^\s*#\?\s*SCX_FLAGS=.*$/SCX_FLAGS="{} {}"/')", scx_base_flags, scx_extra_flags);
     };
 
@@ -235,7 +265,8 @@ void SchedExtWindow::on_apply() noexcept {
     const auto& current_profile  = m_ui->schedext_profile_combo_box->currentText().toStdString();
     const auto& extra_flags      = m_ui->schedext_flags_edit->text().trimmed().toStdString();
 
-    const auto& scx_flags_sed = get_scx_flags_sed(current_selected, current_profile, extra_flags);
+    const auto& scx_mode      = get_scx_mode_from_str(current_profile);
+    const auto& scx_flags_sed = get_scx_flags_sed(current_selected, scx_mode, extra_flags);
 
     const auto& sed_cmd = fmt::format("sed -e 's/SCX_SCHEDULER=.*/SCX_SCHEDULER={}/' {} -i /etc/default/scx && systemctl {} scx", current_selected, scx_flags_sed, service_cmd);
 
