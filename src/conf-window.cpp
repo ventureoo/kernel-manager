@@ -192,6 +192,27 @@ auto get_source_array_from_pkgbuild(std::string_view kernel_name_path, std::stri
     return utils::make_multiline(src_entries, ' ');
 }
 
+auto get_pkgext_value_from_makepkgconf() noexcept -> std::string {
+    using namespace std::string_view_literals;
+    using namespace std::string_literals;
+    static constexpr auto testscript_src = "#!/usr/bin/bash\nsource \"/etc/makepkg.conf\"\necho \"${PKGEXT}\""sv;
+
+    const auto& testscript_path = fmt::format(FMT_COMPILE("{}/.testscriptpkgext"), fs::current_path().string());
+    if (utils::write_to_file(testscript_path, testscript_src)) {
+        fs::permissions(testscript_path,
+            fs::perms::owner_exec | fs::perms::group_exec | fs::perms::others_exec,
+            fs::perm_options::add);
+    }
+
+    auto pkgext_val = utils::exec(testscript_path);
+    if (pkgext_val.empty()) {
+        fmt::print(stderr, "failed to get PKGEXT from /etc/makepkg.conf");
+        return ".pkg.tar.zst"s;
+    }
+    return pkgext_val;
+}
+
+
 auto prepare_func_names(std::vector<std::string> parse_lines, std::string_view pkgver_str) noexcept -> std::vector<std::string> {
     using namespace std::string_view_literals;
 
@@ -199,6 +220,9 @@ auto prepare_func_names(std::vector<std::string> parse_lines, std::string_view p
         auto rng_str = std::string_view(&*rng.begin(), static_cast<size_t>(std::ranges::distance(rng)));
         return rng_str.starts_with("package_"sv);
     };
+
+    // fetch the pkgext from /etc/makepkg.conf, and fallback to '.pkg.tar.zst' which is default value of makepkg
+    const auto& pkgext_val = get_pkgext_value_from_makepkgconf();
 
     std::vector<std::string> pkg_globs{};
     pkg_globs = parse_lines
@@ -219,7 +243,7 @@ auto prepare_func_names(std::vector<std::string> parse_lines, std::string_view p
               if (line.starts_with(needle_prefix)) {
                   line.remove_prefix(needle_prefix.size());
               }
-              return fmt::format(FMT_COMPILE("{}-{}-*.pkg.tar.zst"), line, pkgver_str);
+              return fmt::format(FMT_COMPILE("{}-{}-*{}"), line, pkgver_str, pkgext_val);
           })
         | std::ranges::to<std::vector<std::string>>();
     return pkg_globs;
