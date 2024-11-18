@@ -390,7 +390,7 @@ void ConfWindow::connect_all_checkboxes() noexcept {
     };
 
     for (auto* checkbox : checkbox_list) {
-        connect(checkbox, &QCheckBox::stateChanged, this, [this](std::int32_t) {
+        connect(checkbox, &QCheckBox::checkStateChanged, this, [this](Qt::CheckState) {
             reset_patches_data_tab();
         });
     }
