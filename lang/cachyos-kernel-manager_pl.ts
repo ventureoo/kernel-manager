@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pl">
+<TS version="2.1" language="pl_PL">
 <context>
     <name>ConfOptionsPage</name>
     <message>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../src/conf-options-page.ui" line="356"/>
         <source>Running tick rate</source>
-        <translation>Wybierz &quot;rick rate&quot;</translation>
+        <translation>Wybierz &quot;tick rate&quot;</translation>
     </message>
     <message>
         <location filename="../src/conf-options-page.ui" line="385"/>
