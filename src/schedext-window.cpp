@@ -136,11 +136,11 @@ void disable_scx_service() noexcept {
 constexpr auto get_scx_mode_from_str(std::string_view scx_mode) noexcept -> scx::SchedMode {
     using namespace std::string_view_literals;
 
-    if (scx_mode == "gaming"sv) {
+    if (scx_mode == "Gaming"sv) {
         return scx::SchedMode::Gaming;
-    } else if (scx_mode == "lowlatency"sv) {
+    } else if (scx_mode == "Lowlatency"sv) {
         return scx::SchedMode::LowLatency;
-    } else if (scx_mode == "powersave"sv) {
+    } else if (scx_mode == "Powersave"sv) {
         return scx::SchedMode::PowerSave;
     }
     return scx::SchedMode::Auto;
@@ -185,10 +185,10 @@ SchedExtWindow::SchedExtWindow(QWidget* parent)
 
     // Selecting the performance profile
     QStringList sched_profiles;
-    sched_profiles << "default"
-                   << "gaming"
-                   << "lowlatency"
-                   << "powersave";
+    sched_profiles << "Auto"
+                   << "Gaming"
+                   << "Lowlatency"
+                   << "Powersave";
     m_ui->schedext_profile_combo_box->addItems(sched_profiles);
 
     m_ui->current_sched_label->setText(QString::fromStdString(get_current_scheduler()));
